@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>西南学院大学陸上競技部 公式Webサイト</title>
+    <meta name="description" content="西南学院大学陸上競技部の公式ウェブサイトです。">
+    <style>
+        :root {
+            --primary-color: #005a36;
+            --accent-color: #d4af37;
+            --bg-color: #f8f9fa;
+            --text-color: #333333;
+            --card-bg: #ffffff;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: "Helvetica Neue", Arial, sans-serif; line-height: 1.6; color: var(--text-color); background-color: var(--bg-color); }
+
+        header { background-color: var(--primary-color); color: white; padding: 1rem 2rem; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 5px rgba(0,0,0,0.2); display: flex; justify-content: space-between; align-items: center; }
+        header h1 { font-size: 1.5rem; letter-spacing: 1px; }
+        nav ul { display: flex; list-style: none; gap: 1.5rem; }
+        nav a { color: white; text-decoration: none; font-weight: bold; transition: color 0.3s; }
+        nav a:hover { color: var(--accent-color); }
+
+        .hero { position: relative; width: 100%; height: 400px; background: url('西南全体写真.jpg') center/cover no-repeat; display: flex; flex-direction: column; justify-content: center; align-items: center; color: white; text-align: center; }
+        .hero::before { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(0, 90, 54, 0.85) 0%, rgba(0, 90, 54, 0.55) 100%); z-index: 1; }
+        .hero-content { position: relative; z-index: 2; padding: 0 1rem; }
+        .hero h2 { font-size: 2.8rem; font-weight: 800; letter-spacing: 2px; text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5); margin-bottom: 0.5rem; }
+        .hero p { font-size: 1.2rem; letter-spacing: 4px; color: var(--accent-color); font-weight: bold; }
+
+        .container { max-width: 1000px; margin: 2rem auto; padding: 0 1rem; }
+        section { background: var(--card-bg); padding: 2rem; border-radius: 8px; margin-bottom: 2.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        h2.section-title { color: var(--primary-color); border-bottom: 3px solid var(--primary-color); padding-bottom: 0.5rem; margin-bottom: 1.5rem; }
+
+        .results-section { border: 2px solid var(--primary-color); }
+        .results-scroll-container { max-height: 300px; overflow-y: auto; padding-right: 0.5rem; }
+        .result-item { border-bottom: 1px dashed #ccc; padding: 1rem 0; }
+        .result-item:last-child { border-bottom: none; }
+        .result-date { font-weight: bold; color: var(--primary-color); font-size: 0.9rem; }
+        .result-title { font-size: 1.1rem; font-weight: bold; margin: 0.3rem 0; }
+
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; }
+        .staff-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+        .card { border: 1px solid #eee; border-radius: 6px; padding: 1rem; text-align: center; background: #fafafa; }
+        .card-role { font-size: 0.85rem; color: var(--primary-color); font-weight: bold; }
+        .card-name { font-size: 1.2rem; font-weight: bold; margin: 0.5rem 0; }
+        .card-sub { font-size: 0.9rem; color: #666; }
+
+        footer { background-color: var(--primary-color); color: white; text-align: center; padding: 1.5rem; margin-top: 3rem; }
+
+        @media (max-width: 600px) {
+            header { display: none; }
+            .hero { height: 280px; }
+            .hero h2 { font-size: 1.8rem; }
+            .hero p { font-size: 0.9rem; }
+            .staff-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>西南学院大学陸上競技部</h1>
+        <nav>
+            <ul>
+                <li><a href="#results">大会結果</a></li>
+                <li><a href="#staff">スタッフ紹介</a></li>
+                <li><a href="#executives">幹部紹介</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="hero">
+        <div class="hero-content">
+            <h2>西南学院大学陸上競技部</h2>
+            <p>— SEINAN GAKUIN UNIV. TRACK & FIELD —</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <section id="results" class="results-section">
+            <h2 class="section-title"> 大会結果 - Latest Results - </h2>
+            <p style="font-size:0.85rem; color:#666; margin-bottom: 1rem;">※最新の試合結果を随時更新しています。</p>
+
+            <div class="results-scroll-container" id="results-container">
+                <p>最新のデータを読み込み中...</p>
+            </div>
+        </section>
+
+        <section id="staff">
+            <h2 class="section-title"> スタッフ紹介</h2>
+            <div class="staff-grid">
+                <div class="card"><div class="card-role">監督</div><div class="card-name">相良 敬之</div><div class="card-sub">本大学OB（第99期主将）</div></div>
+                <div class="card"><div class="card-role">コーチ</div><div class="card-name">林田 裕平</div><div class="card-sub">跳躍ブロック担当</div></div>
+                <div class="card"><div class="card-role">コーチ</div><div class="card-name">當眞 祐樹</div><div class="card-sub">短距離ブロック担当</div></div>
+            </div>
+        </section>
+
+        <section id="executives">
+            <h2 class="section-title"> 幹部部員紹介</h2>
+            <div class="grid">
+                <div class="card"><div class="card-role">主将</div><div class="card-name">古賀 美帆</div><div class="card-sub">人間科学学部 3年 / フィールド</div></div>
+                <div class="card"><div class="card-role">主務</div><div class="card-name">大川内 唯</div><div class="card-sub">人間科学学部 3年 / 中長距離</div></div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 西南学院大学陸上競技部 All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        // ★ここにSTEP 1-2でコピーしたCSVのURLを貼る★
+        const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSFamKROQo2Htuxzfj2sfn3FCrw6ZMNCW4kuXFwl-qa8LsrmyeXFr6I2y7E-4C8Rx0XNfYLoeiBGdGa/pub?gid=0&single=true&output=csv';
+
+        async function fetchResults() {
+            try {
+                const response = await fetch(csvUrl);
+                const data = await response.text();
+                const lines = data.trim().split('\n').slice(1);
+
+                let html = '';
+                lines.forEach(line => {
+                    const [date, title, pdfUrl] = line.split(',');
+                    if (date || title) {
+                        html += `
+                            <div class="result-item">
+                                <div class="result-date">${date ? date.trim() : ''}</div>
+                                <div class="result-title">${title ? title.trim() : ''}</div>
+                                <div class="result-detail">
+                                    <a href="${pdfUrl ? pdfUrl.trim() : '#'}" target="_blank" style="color:var(--primary-color);">＞＞ 詳細リザルト(PDF)はこちら</a>
+                                </div>
+                            </div>
+                        `;
+                    }
+                });
+                document.getElementById('results-container').innerHTML = html || '<p>現在、大会結果はありません。</p>';
+            } catch (error) {
+                document.getElementById('results-container').innerHTML = '<p>データの読み込みに失敗しました。</p>';
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', fetchResults);
+    </script>
+</body>
+</html>
