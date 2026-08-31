@@ -4,62 +4,320 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>西南学院大学陸上競技部 公式Webサイト</title>
-    <meta name="description" content="西南学院大学陸上競技部の公式ウェブサイトです。">
+    <meta name="description" content="西南学院大学陸上競技部の公式ウェブサイトです。大会結果、大学記録、部員・スタッフ紹介、練習日程などの最新情報を随時更新中！">
+    <meta name="robots" content="index, follow">
     <style>
+        /* --- 基本設定・テレベルトグリーン基調 --- */
         :root {
-            --primary-color: #005a36;
-            --accent-color: #d4af37;
+            --primary-color: #005a36; /* テレベルトグリーン */
+            --accent-color: #d4af37;  /* ゴールド（アクセント） */
             --bg-color: #f8f9fa;
             --text-color: #333333;
             --card-bg: #ffffff;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: "Helvetica Neue", Arial, sans-serif; line-height: 1.6; color: var(--text-color); background-color: var(--bg-color); }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-        header { background-color: var(--primary-color); color: white; padding: 1rem 2rem; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 5px rgba(0,0,0,0.2); display: flex; justify-content: space-between; align-items: center; }
-        header h1 { font-size: 1.5rem; letter-spacing: 1px; }
-        nav ul { display: flex; list-style: none; gap: 1.5rem; }
-        nav a { color: white; text-decoration: none; font-weight: bold; transition: color 0.3s; }
-        nav a:hover { color: var(--accent-color); }
+        body {
+            font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+        }
 
-        .hero { position: relative; width: 100%; height: 400px; background: url('西南全体写真.jpg') center/cover no-repeat; display: flex; flex-direction: column; justify-content: center; align-items: center; color: white; text-align: center; }
-        .hero::before { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(0, 90, 54, 0.85) 0%, rgba(0, 90, 54, 0.55) 100%); z-index: 1; }
-        .hero-content { position: relative; z-index: 2; padding: 0 1rem; }
-        .hero h2 { font-size: 2.8rem; font-weight: 800; letter-spacing: 2px; text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5); margin-bottom: 0.5rem; }
-        .hero p { font-size: 1.2rem; letter-spacing: 4px; color: var(--accent-color); font-weight: bold; }
+        /* --- ヘッダー --- */
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-        .container { max-width: 1000px; margin: 2rem auto; padding: 0 1rem; }
-        section { background: var(--card-bg); padding: 2rem; border-radius: 8px; margin-bottom: 2.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
-        h2.section-title { color: var(--primary-color); border-bottom: 3px solid var(--primary-color); padding-bottom: 0.5rem; margin-bottom: 1.5rem; }
+        header h1 {
+            font-size: 1.5rem;
+            letter-spacing: 1px;
+        }
 
-        .results-section { border: 2px solid var(--primary-color); }
-        .results-scroll-container { max-height: 300px; overflow-y: auto; padding-right: 0.5rem; }
-        .result-item { border-bottom: 1px dashed #ccc; padding: 1rem 0; }
-        .result-item:last-child { border-bottom: none; }
-        .result-date { font-weight: bold; color: var(--primary-color); font-size: 0.9rem; }
-        .result-title { font-size: 1.1rem; font-weight: bold; margin: 0.3rem 0; }
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
 
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; }
-        .staff-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
-        .card { border: 1px solid #eee; border-radius: 6px; padding: 1rem; text-align: center; background: #fafafa; }
-        .card-role { font-size: 0.85rem; color: var(--primary-color); font-weight: bold; }
-        .card-name { font-size: 1.2rem; font-weight: bold; margin: 0.5rem 0; }
-        .card-sub { font-size: 0.9rem; color: #666; }
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
 
-        footer { background-color: var(--primary-color); color: white; text-align: center; padding: 1.5rem; margin-top: 3rem; }
+        nav a:hover {
+            color: var(--accent-color);
+        }
 
+        /* --- メインビジュアル（全体写真 ＋ テレベルトグリーン） --- */
+        .hero {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            /* ★画像パスを変更してください★ */
+            background: url('西南全体写真.jpg') center/cover no-repeat;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+        }
+
+        /* テレベルトグリーンの半透明オーバーレイ */
+        .hero::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0, 90, 54, 0.85) 0%, rgba(0, 90, 54, 0.55) 100%);
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            padding: 0 1rem;
+        }
+
+        .hero h2 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            margin-bottom: 0.5rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            letter-spacing: 4px;
+            color: var(--accent-color);
+            font-weight: bold;
+            text-shadow: 0 1px 5px rgba(0,0,0,0.5);
+        }
+
+        /* コンテナ */
+        .container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        /* 各セクション共通 */
+        section {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 8px;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        h2.section-title {
+            color: var(--primary-color);
+            border-bottom: 3px solid var(--primary-color);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* ヘッダーエリアの折り返し・対比用コンテナ */
+        .section-header-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            border-bottom: 3px solid var(--primary-color);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-header-wrapper h2.section-title {
+            border-bottom: none;
+            padding-bottom: 0;
+            margin-bottom: 0;
+        }
+
+        .pdf-link {
+            font-size: 0.95rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: color 0.3s;
+            white-space: nowrap;
+        }
+
+        .pdf-link:hover {
+            color: var(--accent-color);
+            text-decoration: underline;
+        }
+
+        /* --- 大会結果セクション --- */
+        .results-section {
+            border: 2px solid var(--primary-color);
+        }
+
+        .results-scroll-container {
+            max-height: 300px;
+            overflow-y: auto;
+            padding-right: 0.5rem;
+        }
+
+        .result-item {
+            border-bottom: 1px dashed #ccc;
+            padding: 1rem 0;
+        }
+
+        .result-item:last-child {
+            border-bottom: none;
+        }
+
+        .result-date {
+            font-weight: bold;
+            color: var(--primary-color);
+            font-size: 0.9rem;
+        }
+
+        .result-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin: 0.3rem 0;
+        }
+
+        .result-detail {
+            font-size: 0.95rem;
+            color: #555;
+        }
+
+        /* --- テーブルデザイン (大学記録用スクロール) --- */
+        .records-scroll-container {
+            max-height: 350px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 0.8rem;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: var(--primary-color);
+            color: white;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        /* --- グリッドレイアウト (スタッフ・幹部用) --- */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .staff-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        .card {
+            border: 1px solid #eee;
+            border-radius: 6px;
+            padding: 1rem;
+            text-align: center;
+            background: #fafafa;
+        }
+
+        .card-role {
+            font-size: 0.85rem;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        .card-name {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin: 0.5rem 0;
+        }
+
+        .card-sub {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        /* フッター */
+        footer {
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        /* スマホ対応 (600px以下) */
         @media (max-width: 600px) {
-            header { display: none; }
-            .hero { height: 280px; }
-            .hero h2 { font-size: 1.8rem; }
-            .hero p { font-size: 0.9rem; }
-            .staff-grid { grid-template-columns: 1fr; }
+            header {
+                display: none;
+            }
+            
+            .hero {
+                height: 280px;
+            }
+            .hero h2 {
+                font-size: 1.8rem;
+            }
+            .hero p {
+                font-size: 0.9rem;
+            }
+            .staff-grid {
+                grid-template-columns: 1fr;
+            }
+            .section-header-wrapper {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
         }
     </style>
 </head>
 <body>
 
+    <!-- ヘッダー -->
     <header>
         <h1>西南学院大学陸上競技部</h1>
         <nav>
@@ -67,10 +325,12 @@
                 <li><a href="#results">大会結果</a></li>
                 <li><a href="#staff">スタッフ紹介</a></li>
                 <li><a href="#executives">幹部紹介</a></li>
+                <li><a href="#records">大学記録</a></li>
             </ul>
         </nav>
     </header>
 
+    <!-- メインビジュアル -->
     <div class="hero">
         <div class="hero-content">
             <h2>西南学院大学陸上競技部</h2>
@@ -79,69 +339,209 @@
     </div>
 
     <div class="container">
+
+        <!-- 1. 大会結果（スプレッドシートから自動読み込み） -->
         <section id="results" class="results-section">
-            <h2 class="section-title"> 大会結果 - Latest Results - </h2>
+            <h2 class="section-title"> 大会結果 - Latest Results </h2>
             <p style="font-size:0.85rem; color:#666; margin-bottom: 1rem;">※最新の試合結果を随時更新しています。</p>
 
             <div class="results-scroll-container" id="results-container">
-                <p>最新のデータを読み込み中...</p>
+                <p>最新データを読み込んでいます...</p>
             </div>
         </section>
 
+        <!-- 2. スタッフ紹介 -->
         <section id="staff">
             <h2 class="section-title"> スタッフ紹介</h2>
             <div class="staff-grid">
-                <div class="card"><div class="card-role">監督</div><div class="card-name">相良 敬之</div><div class="card-sub">本大学OB（第99期主将）</div></div>
-                <div class="card"><div class="card-role">コーチ</div><div class="card-name">林田 裕平</div><div class="card-sub">跳躍ブロック担当</div></div>
-                <div class="card"><div class="card-role">コーチ</div><div class="card-name">當眞 祐樹</div><div class="card-sub">短距離ブロック担当</div></div>
+                <div class="card" style="grid-column: 1;">
+                    <div class="card-role">監督</div>
+                    <div class="card-name">相良 敬之</div>
+                    <div class="card-sub">本大学OB（第99期主将）</div>
+                </div>
+
+                <div class="card" style="grid-column: 1;">
+                    <div class="card-role">コーチ</div>
+                    <div class="card-name">林田 裕平</div>
+                    <div class="card-sub">跳躍ブロック担当</div>
+                </div>
+
+                <div class="card">
+                    <div class="card-role">コーチ</div>
+                    <div class="card-name">當眞 祐樹</div>
+                    <div class="card-sub">短距離ブロック担当</div>
+                </div>
+
+                <div class="card">
+                    <div class="card-role">コーチ</div>
+                    <div class="card-name">田中 飛鳥</div>
+                    <div class="card-sub">中長距離ブロック担当</div>
+                </div>
             </div>
         </section>
 
+        <!-- 3. 幹部部員紹介 -->
         <section id="executives">
             <h2 class="section-title"> 幹部部員紹介</h2>
             <div class="grid">
-                <div class="card"><div class="card-role">主将</div><div class="card-name">古賀 美帆</div><div class="card-sub">人間科学学部 3年 / フィールド</div></div>
-                <div class="card"><div class="card-role">主務</div><div class="card-name">大川内 唯</div><div class="card-sub">人間科学学部 3年 / 中長距離</div></div>
+                <div class="card">
+                    <div class="card-role">主将</div>
+                    <div class="card-name">古賀 美帆</div>
+                    <div class="card-sub">人間科学学部 3年 / フィールド</div>
+                </div>
+
+                <div class="card">
+                    <div class="card-role">主務</div>
+                    <div class="card-name">大川内 唯</div>
+                    <div class="card-sub">人間科学学部 3年 / 中長距離</div>
+                </div>
+
+                <div class="card">
+                    <div class="card-role">副主将</div>
+                    <div class="card-name">深井 優月</div>
+                    <div class="card-sub">人間科学学部 3年 / 短距離</div>
+                </div>
             </div>
         </section>
+
+        <!-- 4. 大学記録一覧 -->
+        <section id="records">
+            <div class="section-header-wrapper">
+                <h2 class="section-title">⏱ 大学記録 </h2>
+                <a href="#" class="pdf-link">＞＞ 一覧表はこちら (PDF)</a>
+            </div>
+            
+            <div class="records-scroll-container">
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>種目</th>
+                                <th>記録</th>
+                                <th>氏名</th>
+                                <th>樹立年</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>男子 100m</td>
+                                <td>10秒20</td>
+                                <td>陸上 太郎</td>
+                                <td>2025年</td>
+                            </tr>
+                            <tr>
+                                <td>男子 200m</td>
+                                <td>20秒80</td>
+                                <td>陸上 太郎</td>
+                                <td>2025年</td>
+                            </tr>
+                            <tr>
+                                <td>男子 400m</td>
+                                <td>46秒50</td>
+                                <td>スプリント 花形</td>
+                                <td>2024年</td>
+                            </tr>
+                            <tr>
+                                <td>男子 800m</td>
+                                <td>1分50秒10</td>
+                                <td>中距離 拓也</td>
+                                <td>2023年</td>
+                            </tr>
+                            <tr>
+                                <td>男子 1500m</td>
+                                <td>3分45秒00</td>
+                                <td>走野 次郎</td>
+                                <td>2024年</td>
+                            </tr>
+                            <tr>
+                                <td>男子 5000m</td>
+                                <td>13分55秒20</td>
+                                <td>長距離 健太</td>
+                                <td>2025年</td>
+                            </tr>
+                            <tr>
+                                <td>男子 10000m</td>
+                                <td>28分40秒00</td>
+                                <td>長距離 健太</td>
+                                <td>2025年</td>
+                            </tr>
+                            <tr>
+                                <td>男子 走幅跳</td>
+                                <td>7m80</td>
+                                <td>ジャンパー 翔</td>
+                                <td>2022年</td>
+                            </tr>
+                            <tr>
+                                <td>女子 100m</td>
+                                <td>11秒70</td>
+                                <td>速水 花子</td>
+                                <td>2023年</td>
+                            </tr>
+                            <tr>
+                                <td>女子 200m</td>
+                                <td>24秒10</td>
+                                <td>速水 花子</td>
+                                <td>2024年</td>
+                            </tr>
+                            <tr>
+                                <td>女子 走幅跳</td>
+                                <td>6m10</td>
+                                <td>跳躍 咲</td>
+                                <td>2026年</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>        
+
     </div>
 
+    <!-- フッター -->
     <footer>
         <p>&copy; 2026 西南学院大学陸上競技部 All Rights Reserved.</p>
     </footer>
 
+    <!-- スプレッドシート読み込み処理 -->
     <script>
-        // ★ここにSTEP 1-2でコピーしたCSVのURLを貼る★
+        // ★STEP 1-2で取得したCSVのURLをここに貼り付けてください★
         const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSFamKROQo2Htuxzfj2sfn3FCrw6ZMNCW4kuXFwl-qa8LsrmyeXFr6I2y7E-4C8Rx0XNfYLoeiBGdGa/pub?gid=0&single=true&output=csv';
 
-        async function fetchResults() {
+        async function loadResults() {
             try {
                 const response = await fetch(csvUrl);
                 const data = await response.text();
+                
+                // 行ごとに分割（1行目の見出しを除外）
                 const lines = data.trim().split('\n').slice(1);
-
                 let html = '';
+
                 lines.forEach(line => {
-                    const [date, title, pdfUrl] = line.split(',');
+                    const columns = line.split(',');
+                    const date = columns[0] ? columns[0].trim() : '';
+                    const title = columns[1] ? columns[1].trim() : '';
+                    const pdfUrl = columns[2] ? columns[2].trim() : '#';
+
                     if (date || title) {
                         html += `
                             <div class="result-item">
-                                <div class="result-date">${date ? date.trim() : ''}</div>
-                                <div class="result-title">${title ? title.trim() : ''}</div>
+                                <div class="result-date">${date}</div>
+                                <div class="result-title">${title}</div>
                                 <div class="result-detail">
-                                    <a href="${pdfUrl ? pdfUrl.trim() : '#'}" target="_blank" style="color:var(--primary-color);">＞＞ 詳細リザルト(PDF)はこちら</a>
+                                    <a href="${pdfUrl}" target="_blank" style="color:var(--primary-color);">＞＞ 詳細リザルト(PDF)はこちら</a>
                                 </div>
                             </div>
                         `;
                     }
                 });
+
                 document.getElementById('results-container').innerHTML = html || '<p>現在、大会結果はありません。</p>';
             } catch (error) {
                 document.getElementById('results-container').innerHTML = '<p>データの読み込みに失敗しました。</p>';
             }
         }
 
-        window.addEventListener('DOMContentLoaded', fetchResults);
+        window.addEventListener('DOMContentLoaded', loadResults);
     </script>
 </body>
 </html>
