@@ -70,7 +70,6 @@
             position: relative;
             width: 100%;
             height: 400px;
-            /* ★画像パスを変更してください★ */
             background: url('西南全体写真.jpg') center/cover no-repeat;
             display: flex;
             flex-direction: column;
@@ -404,11 +403,11 @@
             </div>
         </section>
 
-        <!-- 4. 大学記録一覧 -->
+        <!-- 4. 大学記録一覧（スプレッドシートから自動読み込み） -->
         <section id="records">
             <div class="section-header-wrapper">
                 <h2 class="section-title">⏱ 大学記録 </h2>
-                <a href="#" class="pdf-link">＞＞ 一覧表はこちら (PDF)</a>
+                <a href="#" class="pdf-link" target="_blank">＞＞ 一覧表はこちら (PDF)</a>
             </div>
             
             <div class="records-scroll-container">
@@ -422,72 +421,9 @@
                                 <th>樹立年</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="records-tbody">
                             <tr>
-                                <td>男子 100m</td>
-                                <td>10秒20</td>
-                                <td>陸上 太郎</td>
-                                <td>2025年</td>
-                            </tr>
-                            <tr>
-                                <td>男子 200m</td>
-                                <td>20秒80</td>
-                                <td>陸上 太郎</td>
-                                <td>2025年</td>
-                            </tr>
-                            <tr>
-                                <td>男子 400m</td>
-                                <td>46秒50</td>
-                                <td>スプリント 花形</td>
-                                <td>2024年</td>
-                            </tr>
-                            <tr>
-                                <td>男子 800m</td>
-                                <td>1分50秒10</td>
-                                <td>中距離 拓也</td>
-                                <td>2023年</td>
-                            </tr>
-                            <tr>
-                                <td>男子 1500m</td>
-                                <td>3分45秒00</td>
-                                <td>走野 次郎</td>
-                                <td>2024年</td>
-                            </tr>
-                            <tr>
-                                <td>男子 5000m</td>
-                                <td>13分55秒20</td>
-                                <td>長距離 健太</td>
-                                <td>2025年</td>
-                            </tr>
-                            <tr>
-                                <td>男子 10000m</td>
-                                <td>28分40秒00</td>
-                                <td>長距離 健太</td>
-                                <td>2025年</td>
-                            </tr>
-                            <tr>
-                                <td>男子 走幅跳</td>
-                                <td>7m80</td>
-                                <td>ジャンパー 翔</td>
-                                <td>2022年</td>
-                            </tr>
-                            <tr>
-                                <td>女子 100m</td>
-                                <td>11秒70</td>
-                                <td>速水 花子</td>
-                                <td>2023年</td>
-                            </tr>
-                            <tr>
-                                <td>女子 200m</td>
-                                <td>24秒10</td>
-                                <td>速水 花子</td>
-                                <td>2024年</td>
-                            </tr>
-                            <tr>
-                                <td>女子 走幅跳</td>
-                                <td>6m10</td>
-                                <td>跳躍 咲</td>
-                                <td>2026年</td>
+                                <td colspan="4" style="text-align: center; padding: 20px;">データを読み込み中...</td>
                             </tr>
                         </tbody>
                     </table>
@@ -504,32 +440,58 @@
 
     <!-- スプレッドシート読み込み処理 -->
     <script>
-        // ★STEP 1-2で取得したCSVのURLをここに貼り付けてください★
-        const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSFamKROQo2Htuxzfj2sfn3FCrw6ZMNCW4kuXFwl-qa8LsrmyeXFr6I2y7E-4C8Rx0XNfYLoeiBGdGa/pub?gid=0&single=true&output=csv';
+        // 1. 大会結果用のCSV URL
+        const resultsCsvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSFamKROQo2Htuxzfj2sfn3FCrw6ZMNCW4kuXFwl-qa8LsrmyeXFr6I2y7E-4C8Rx0XNfYLoeiBGdGa/pub?gid=0&single=true&output=csv';
 
+        // 2. 西南記録用のCSV URL（★ここを「西南記録」シートのWeb公開URLに書き換えてください★）
+        const recordsCsvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSFamKROQo2Htuxzfj2sfn3FCrw6ZMNCW4kuXFwl-qa8LsrmyeXFr6I2y7E-4C8Rx0XNfYLoeiBGdGa/pub?gid=319677524&single=true&output=csv';
+
+        // CSVの1行（カンマ区切り）を正しく分割する関数
+        function parseCsvLine(text) {
+            const result = [];
+            let cell = '';
+            let inQuotes = false;
+            for (let i = 0; i < text.length; i++) {
+                const c = text[i];
+                if (c === '"') {
+                    inQuotes = !inQuotes;
+                } else if (c === ',' && !inQuotes) {
+                    result.push(cell.trim().replace(/^"|"$/g, ''));
+                    cell = '';
+                } else {
+                    cell += c;
+                }
+            }
+            result.push(cell.trim().replace(/^"|"$/g, ''));
+            return result;
+        }
+
+        // 大会結果の読み込み処理
         async function loadResults() {
             try {
-                const response = await fetch(csvUrl);
+                const response = await fetch(resultsCsvUrl);
                 const data = await response.text();
-                
-                // 行ごとに分割（1行目の見出しを除外）
                 const lines = data.trim().split('\n').slice(1);
                 let html = '';
 
                 lines.forEach(line => {
-                    const columns = line.split(',');
-                    const date = columns[0] ? columns[0].trim() : '';
-                    const title = columns[1] ? columns[1].trim() : '';
-                    const pdfUrl = columns[2] ? columns[2].trim() : '#';
+                    if (!line.trim()) return;
+                    const columns = parseCsvLine(line);
+                    const date = columns[0] || '';
+                    const title = columns[1] || '';
+                    const pdfUrl = columns[2] || '';
 
                     if (date || title) {
+                        let pdfLinkHtml = '';
+                        if (pdfUrl && pdfUrl !== '#' && pdfUrl.startsWith('http')) {
+                            pdfLinkHtml = `<div class="result-detail"><a href="${pdfUrl}" target="_blank" style="color:var(--primary-color);">＞＞ 詳細リザルト(PDF)はこちら</a></div>`;
+                        }
+
                         html += `
                             <div class="result-item">
                                 <div class="result-date">${date}</div>
                                 <div class="result-title">${title}</div>
-                                <div class="result-detail">
-                                    <a href="${pdfUrl}" target="_blank" style="color:var(--primary-color);">＞＞ 詳細リザルト(PDF)はこちら</a>
-                                </div>
+                                ${pdfLinkHtml}
                             </div>
                         `;
                     }
@@ -537,11 +499,48 @@
 
                 document.getElementById('results-container').innerHTML = html || '<p>現在、大会結果はありません。</p>';
             } catch (error) {
+                console.error('大会結果エラー:', error);
                 document.getElementById('results-container').innerHTML = '<p>データの読み込みに失敗しました。</p>';
             }
         }
 
-        window.addEventListener('DOMContentLoaded', loadResults);
+        // 大学記録の読み込み処理
+        async function loadRecords() {
+            try {
+                const response = await fetch(recordsCsvUrl);
+                const data = await response.text();
+                const lines = data.trim().split('\n').slice(1);
+                const tbody = document.getElementById('records-tbody');
+                tbody.innerHTML = '';
+
+                lines.forEach(line => {
+                    if (!line.trim()) return;
+                    const columns = parseCsvLine(line);
+                    const syomoku = columns[0] || '';
+                    const kiroku = columns[1] || '';
+                    const name = columns[2] || '';
+                    const year = columns[3] || '';
+
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td>${syomoku}</td>
+                        <td>${kiroku}</td>
+                        <td>${name}</td>
+                        <td>${year}</td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            } catch (error) {
+                console.error('大学記録エラー:', error);
+                document.getElementById('records-tbody').innerHTML = '<tr><td colspan="4" style="text-align: center;">データの読み込みに失敗しました。URLを確認してください。</td></tr>';
+            }
+        }
+
+        // ページ読み込み時に実行
+        window.addEventListener('DOMContentLoaded', () => {
+            loadResults();
+            loadRecords();
+        });
     </script>
 </body>
 </html>
