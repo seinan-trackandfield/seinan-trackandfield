@@ -241,17 +241,119 @@
             background-color: #f2f2f2;
         }
 
-        /* --- グリッドレイアウト (スタッフ・幹部用) --- */
+        /* --- グリッドレイアウト (幹部用) --- */
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 1.5rem;
         }
 
+        /* --- スタッフ紹介専用カードスタイル --- */
         .staff-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 1.5rem;
+        }
+
+        .staff-card {
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 1.5rem 1.2rem;
+            background: #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .staff-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        /* 部長カード（1列目左揃え） */
+        .staff-card-top {
+            grid-column: 1 / -1;
+            max-width: 320px;
+            margin: 0 auto 0 0;
+            width: 100%;
+        }
+
+        .staff-img-wrapper {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            overflow: hidden;
+            background-color: #e9ecef;
+            margin-bottom: 1rem;
+            border: 3px solid var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .staff-img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .card-role {
+            font-size: 0.85rem;
+            color: var(--primary-color);
+            font-weight: bold;
+            background-color: #e8f5e9;
+            padding: 0.2rem 0.8rem;
+            border-radius: 12px;
+            display: inline-block;
+            margin-bottom: 0.4rem;
+        }
+
+        .card-name {
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin-bottom: 0.4rem;
+            color: #222;
+        }
+
+        /* 経歴・記録エリア */
+        .card-history {
+            font-size: 0.85rem;
+            color: #555;
+            margin-bottom: 0.8rem;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 0.6rem;
+            width: 100%;
+            text-align: left;
+            line-height: 1.5;
+        }
+
+        /* 経歴・主な記録内の小見出し */
+        .history-label {
+            font-weight: bold;
+            color: var(--primary-color);
+            display: block;
+            margin-top: 0.4rem;
+            margin-bottom: 0.1rem;
+            font-size: 0.8rem;
+        }
+
+        .history-label:first-child {
+            margin-top: 0;
+        }
+
+        .card-comment {
+            font-size: 0.88rem;
+            color: #444;
+            line-height: 1.5;
+            text-align: left;
+            background: #f9f9f9;
+            padding: 0.8rem;
+            border-radius: 6px;
+            width: 100%;
+            margin-top: auto;
         }
 
         .card {
@@ -260,18 +362,6 @@
             padding: 1rem;
             text-align: center;
             background: #fafafa;
-        }
-
-        .card-role {
-            font-size: 0.85rem;
-            color: var(--primary-color);
-            font-weight: bold;
-        }
-
-        .card-name {
-            font-size: 1.2rem;
-            font-weight: bold;
-            margin: 0.5rem 0;
         }
 
         .card-sub {
@@ -353,29 +443,89 @@
         <section id="staff">
             <h2 class="section-title"> スタッフ紹介</h2>
             <div class="staff-grid">
-                <div class="card" style="grid-column: 1;">
-                    <div class="card-role">監督</div>
+
+                <!-- 【1列目】横尾 部長（左揃え） -->
+                <div class="staff-card staff-card-top">
+                    <div class="staff-img-wrapper">
+                        <img src="横尾亘.jpg" alt="横尾 亘">
+                    </div>
+                    <span class="card-role">部長</span>
+                    <div class="card-name">横尾 亘</div>
+                    <div class="card-history">
+                        <span class="history-label">【経歴】</span>
+                        巣鴨高校 → 早稲田大学<br>
+                        <span class="history-label">【主な記録】</span>
+                        5000m: 17分50秒<br>
+                        (東京私立中学高等学校陸上競技選手権大会)
+                    </div>
+                    <div class="card-comment">
+                        文武両道で、楽しく、厳しく
+                    </div>
+                </div>
+
+                <!-- 【2列目】監督・コーチ陣 -->
+                <!-- 相良 監督 -->
+                <div class="staff-card">
+                    <div class="staff-img-wrapper">
+                        <img src="相良敬之.jpg" alt="相良 敬之">
+                    </div>
+                    <span class="card-role">監督</span>
                     <div class="card-name">相良 敬之</div>
-                    <div class="card-sub">本大学OB（第99期主将）</div>
+                    <div class="card-history">
+                        <span class="history-label">【経歴】</span>
+                        大分県立中津南高校 → 西南学院大学<br><br>
+                        <span class="history-label">【主な記録】</span>
+                        3000m障害: 9分27秒41<br>
+                        (1997年九州学生選手権)
+                    </div>
+                    <div class="card-comment">
+                        大学の部活は社会人になるために必要な「人間力」を高める場だと考えています。競技面だけでなく、私自身の社会人(元銀行員)経験を活かした指導をして参ります。
+                    </div>
                 </div>
 
-                <div class="card" style="grid-column: 1;">
-                    <div class="card-role">コーチ</div>
-                    <div class="card-name">林田 裕平</div>
-                    <div class="card-sub">跳躍ブロック担当</div>
-                </div>
-
-                <div class="card">
-                    <div class="card-role">コーチ</div>
+                <!-- 當眞 コーチ -->
+                <div class="staff-card">
+                    <div class="staff-img-wrapper">
+                        <img src="當眞さん.jpg" alt="當眞 祐樹">
+                    </div>
+                    <span class="card-role">コーチ（短距離）</span>
                     <div class="card-name">當眞 祐樹</div>
-                    <div class="card-sub">短距離ブロック担当</div>
+                    <div class="card-history">
+                        <span class="history-label">【経歴】</span>
+                        名護高校 → 名桜大学 → 福岡大学大学院<br><br>
+                        <span class="history-label">【主な記録】</span>
+                        4×100MR M35世界記録保持<br>
+                        4×100MR優勝(国民体育大会)<br>
+                        西日本インカレ 200M優勝<br>
+                        日本学生個人選手権 200M 3位<br>
+                        日本インカレ 200M入賞<br>
+                        日本選手権 200M入賞
+                    </div>
+                    <div class="card-comment">
+                        昨日の自分から1歩踏み出す。その積み重ねの先に目標達成があると信じています。歩幅は小さくても良いので、その1歩を踏み出せるようにサポートしていきます。
+                    </div>
                 </div>
 
-                <div class="card">
-                    <div class="card-role">コーチ</div>
+                <!-- 田中 コーチ -->
+                <div class="staff-card">
+                    <div class="staff-img-wrapper">
+                        <img src="田中飛鳥.jpg" alt="田中 飛鳥">
+                    </div>
+                    <span class="card-role">コーチ（中長距離）</span>
                     <div class="card-name">田中 飛鳥</div>
-                    <div class="card-sub">中長距離ブロック担当</div>
+                    <div class="card-history">
+                        <span class="history-label">【経歴】</span>
+                        九州国際大学付属高校 → 東海大学<br><br>
+                        <span class="history-label">【主な記録】</span>
+                        5000m: 14分07秒85 <br>(2025年諫早ナイター記録会)<br>
+                        10000m: 28分40秒96 <br>(2010年日体大記録会)<br>
+                        マラソン: 2時間10分02秒 <br>(福岡国際マラソン2025)
+                    </div>
+                    <div class="card-comment">
+                        自身が現役という強みを活かし、学生と一緒に汗を流すことで切磋琢磨して高め合っていきます。
+                    </div>
                 </div>
+
             </div>
         </section>
 
@@ -438,13 +588,12 @@
         <p>&copy; 2026 西南学院大学陸上競技部 All Rights Reserved.</p>
     </footer>
 
-    <!-- スプレッドシート読み込み処理 -->
     <!-- スプレッドシート自動読み込み処理 -->
     <script>
         // 1. 大会結果用 CSV URL
         const resultsCsvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSFamKROQo2Htuxzfj2sfn3FCrw6ZMNCW4kuXFwl-qa8LsrmyeXFr6I2y7E-4C8Rx0XNfYLoeiBGdGa/pub?gid=0&single=true&output=csv';
 
-        // 2. 西南記録用 CSV URL（※ご自身の「西南記録」シートのCSV URLに書き換えてください）
+        // 2. 西南記録用 CSV URL
         const recordsCsvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSFamKROQo2Htuxzfj2sfn3FCrw6ZMNCW4kuXFwl-qa8LsrmyeXFr6I2y7E-4C8Rx0XNfYLoeiBGdGa/pub?gid=319677524&single=true&output=csv';
 
         // CSV分解処理
@@ -529,7 +678,7 @@
             }
         }
 
-        // 安全なタイムフォーマット整形関数（文法エラーを修正）
+        // 安全なタイムフォーマット整形関数
         function formatTrackRecord(text) {
             if (!text) return '';
 
