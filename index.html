@@ -318,7 +318,7 @@
             color: #222;
         }
 
-        /* --- 展開・収納（アコーディオン）用追加CSS --- */
+        /* アコーディオン用スタイル */
         .toggle-btn {
             background-color: transparent;
             color: var(--primary-color);
@@ -350,14 +350,14 @@
         }
 
         .staff-details {
-            display: none; /* 初期状態は非表示 */
+            display: none;
             width: 100%;
             margin-top: 0.5rem;
             animation: fadeIn 0.3s ease-in-out;
         }
 
         .staff-details.open {
-            display: block; /* 開いた時に表示 */
+            display: block;
         }
 
         @keyframes fadeIn {
@@ -365,7 +365,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* 経歴・記録エリア */
         .card-history {
             font-size: 0.85rem;
             color: #555;
@@ -423,7 +422,7 @@
             margin-top: 3rem;
         }
 
-        /* スマホ対応 (600px以下) */
+        /* スマホ対応 */
         @media (max-width: 600px) {
             header {
                 display: none;
@@ -474,7 +473,7 @@
 
     <div class="container">
 
-        <!-- 1. 大会結果 -->
+        <!-- 1. 大会結果（最新が上にくるよう修正） -->
         <section id="results" class="results-section">
             <h2 class="section-title"> 大会結果 - Latest Results </h2>
             <p style="font-size:0.85rem; color:#666; margin-bottom: 1rem;">※最新の試合結果を随時更新しています。</p>
@@ -484,7 +483,7 @@
             </div>
         </section>
 
-        <!-- 2. スタッフ紹介（展開・収納対応） -->
+        <!-- 2. スタッフ紹介 -->
         <section id="staff">
             <h2 class="section-title"> スタッフ紹介</h2>
             <div class="staff-grid">
@@ -654,23 +653,24 @@
 
     <!-- JavaScript処理 -->
     <script>
-        // 1. 大会結果用 CSV URL
         const resultsCsvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSFamKROQo2Htuxzfj2sfn3FCrw6ZMNCW4kuXFwl-qa8LsrmyeXFr6I2y7E-4C8Rx0XNfYLoeiBGdGa/pub?gid=0&single=true&output=csv';
-
-        // 2. 西南記録用 CSV URL
         const recordsCsvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSFamKROQo2Htuxzfj2sfn3FCrw6ZMNCW4kuXFwl-qa8LsrmyeXFr6I2y7E-4C8Rx0XNfYLoeiBGdGa/pub?gid=319677524&single=true&output=csv';
 
-        // CSV分解処理
         function parseCsvLine(line) {
             return line.split(',').map(col => col.replace(/^"|"$/g, '').trim());
         }
 
-        // --- ① 大会結果の読み込み ---
+        // --- ① 大会結果の読み込み（最新順に反転） ---
         async function loadResults() {
             try {
                 const response = await fetch(resultsCsvUrl);
                 const data = await response.text();
-                const lines = data.trim().split('\n').slice(1);
+                // 行ごとに分割して見出し行を除外
+                let lines = data.trim().split('\n').slice(1);
+                
+                // 最新順（逆順）に配列をひっくり返す
+                lines.reverse();
+
                 let html = '';
 
                 lines.forEach(line => {
@@ -741,7 +741,6 @@
             }
         }
 
-        // タイム自動整形関数
         function formatTrackRecord(text) {
             if (!text) return '';
 
@@ -768,10 +767,8 @@
             return formatted + wind;
         }
 
-        // --- ③ スタッフ展開・収納切り替え関数 ---
         function toggleStaff(button) {
             const details = button.nextElementSibling;
-            const arrow = button.querySelector('.arrow');
             
             button.classList.toggle('active');
             details.classList.toggle('open');
@@ -783,7 +780,6 @@
             }
         }
 
-        // ページ読み込み完了時に実行
         window.addEventListener('DOMContentLoaded', () => {
             loadResults();
             loadRecords();
