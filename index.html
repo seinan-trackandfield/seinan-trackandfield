@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="google-site-verification" content="uljUnVMQmDMw49MpOjQn4HoVuKWcnEQi5C5RBZPZikg" />
-    <title>西南学院大学陸上競技部 公式Webサイト</title>
+    <title>西南学院大学陸上競技部 公式ホームページ</title>
     <meta name="description" content="西南学院大学陸上競技部の公式ウェブサイトです。大会結果、大学記録、部員・スタッフ紹介、練習日程などの最新情報を随時更新中！">
     <meta name="robots" content="index, follow">
     <style>
@@ -66,7 +66,7 @@
             color: var(--accent-color);
         }
 
-        /* --- メインビジュアル（全体写真 ＋ テレベルトグリーン） --- */
+        /* --- メインビジュアル --- */
         .hero {
             position: relative;
             width: 100%;
@@ -80,7 +80,6 @@
             text-align: center;
         }
 
-        /* テレベルトグリーンの半透明オーバーレイ */
         .hero::before {
             content: "";
             position: absolute;
@@ -254,6 +253,7 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 1.5rem;
+            align-items: start;
         }
 
         .staff-card {
@@ -270,7 +270,6 @@
         }
 
         .staff-card:hover {
-            transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
         }
 
@@ -315,8 +314,55 @@
         .card-name {
             font-size: 1.25rem;
             font-weight: bold;
-            margin-bottom: 0.4rem;
+            margin-bottom: 0.6rem;
             color: #222;
+        }
+
+        /* --- 展開・収納（アコーディオン）用追加CSS --- */
+        .toggle-btn {
+            background-color: transparent;
+            color: var(--primary-color);
+            border: 1px solid var(--primary-color);
+            padding: 0.35rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .toggle-btn:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .toggle-btn .arrow {
+            transition: transform 0.3s ease;
+            font-size: 0.75rem;
+        }
+
+        .toggle-btn.active .arrow {
+            transform: rotate(180deg);
+        }
+
+        .staff-details {
+            display: none; /* 初期状態は非表示 */
+            width: 100%;
+            margin-top: 0.5rem;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .staff-details.open {
+            display: block; /* 開いた時に表示 */
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         /* 経歴・記録エリア */
@@ -331,7 +377,6 @@
             line-height: 1.5;
         }
 
-        /* 経歴・主な記録内の小見出し */
         .history-label {
             font-weight: bold;
             color: var(--primary-color);
@@ -354,7 +399,6 @@
             padding: 0.8rem;
             border-radius: 6px;
             width: 100%;
-            margin-top: auto;
         }
 
         .card {
@@ -430,7 +474,7 @@
 
     <div class="container">
 
-        <!-- 1. 大会結果（スプレッドシートから自動読み込み） -->
+        <!-- 1. 大会結果 -->
         <section id="results" class="results-section">
             <h2 class="section-title"> 大会結果 - Latest Results </h2>
             <p style="font-size:0.85rem; color:#666; margin-bottom: 1rem;">※最新の試合結果を随時更新しています。</p>
@@ -440,31 +484,35 @@
             </div>
         </section>
 
-        <!-- 2. スタッフ紹介 -->
+        <!-- 2. スタッフ紹介（展開・収納対応） -->
         <section id="staff">
             <h2 class="section-title"> スタッフ紹介</h2>
             <div class="staff-grid">
 
-                <!-- 【1列目】横尾 部長（左揃え） -->
+                <!-- 横尾 部長 -->
                 <div class="staff-card staff-card-top">
                     <div class="staff-img-wrapper">
                         <img src="横尾亘.jpg" alt="横尾 亘">
                     </div>
                     <span class="card-role">部長</span>
                     <div class="card-name">横尾 亘</div>
-                    <div class="card-history">
-                        <span class="history-label">【経歴】</span>
-                        巣鴨高校 → 早稲田大学<br>
-                        <span class="history-label">【主な記録】</span>
-                        5000m: 17分50秒<br>
-                        (東京私立中学高等学校陸上競技選手権大会)
-                    </div>
-                    <div class="card-comment">
-                        文武両道で、楽しく、厳しく
+                    <button class="toggle-btn" onclick="toggleStaff(this)">
+                        プロフィールを見る <span class="arrow">▼</span>
+                    </button>
+                    <div class="staff-details">
+                        <div class="card-history">
+                            <span class="history-label">【経歴】</span>
+                            巣鴨高校 → 早稲田大学<br>
+                            <span class="history-label">【主な記録】</span>
+                            5000m: 17分50秒<br>
+                            (東京私立中学高等学校陸上競技選手権大会)
+                        </div>
+                        <div class="card-comment">
+                            文武両道で、楽しく、厳しく
+                        </div>
                     </div>
                 </div>
 
-                <!-- 【2列目】監督・コーチ陣 -->
                 <!-- 相良 監督 -->
                 <div class="staff-card">
                     <div class="staff-img-wrapper">
@@ -472,15 +520,20 @@
                     </div>
                     <span class="card-role">監督</span>
                     <div class="card-name">相良 敬之</div>
-                    <div class="card-history">
-                        <span class="history-label">【経歴】</span>
-                        大分県立中津南高校 → 西南学院大学<br><br>
-                        <span class="history-label">【主な記録】</span>
-                        3000m障害: 9分27秒41<br>
-                        (1997年九州学生選手権)
-                    </div>
-                    <div class="card-comment">
-                        大学の部活は社会人になるために必要な「人間力」を高める場だと考えています。競技面だけでなく、私自身の社会人(元銀行員)経験を活かした指導をして参ります。
+                    <button class="toggle-btn" onclick="toggleStaff(this)">
+                        プロフィールを見る <span class="arrow">▼</span>
+                    </button>
+                    <div class="staff-details">
+                        <div class="card-history">
+                            <span class="history-label">【経歴】</span>
+                            大分県立中津南高校 → 西南学院大学<br><br>
+                            <span class="history-label">【主な記録】</span>
+                            3000m障害: 9分27秒41<br>
+                            (1997年九州学生選手権)
+                        </div>
+                        <div class="card-comment">
+                            大学の部活は社会人になるために必要な「人間力」を高める場だと考えています。競技面だけでなく、私自身の社会人(元銀行員)経験を活かした指導をして参ります。
+                        </div>
                     </div>
                 </div>
 
@@ -491,19 +544,24 @@
                     </div>
                     <span class="card-role">コーチ（短距離）</span>
                     <div class="card-name">當眞 祐樹</div>
-                    <div class="card-history">
-                        <span class="history-label">【経歴】</span>
-                        名護高校 → 名桜大学 → 福岡大学大学院<br>
-                        <span class="history-label">【主な記録】</span>
-                        4×100MR M35世界記録保持<br>
-                        4×100MR優勝(国民体育大会)<br>
-                        西日本インカレ 200M優勝<br>
-                        日本学生個人選手権 200M 3位<br>
-                        日本インカレ 200M入賞<br>
-                        日本選手権 200M入賞
-                    </div>
-                    <div class="card-comment">
-                        昨日の自分から1歩踏み出す。その積み重ねの先に目標達成があると信じています。歩幅は小さくても良いので、その1歩を踏み出せるようにサポートしていきます。
+                    <button class="toggle-btn" onclick="toggleStaff(this)">
+                        プロフィールを見る <span class="arrow">▼</span>
+                    </button>
+                    <div class="staff-details">
+                        <div class="card-history">
+                            <span class="history-label">【経歴】</span>
+                            名護高校 → 名桜大学 → 福岡大学大学院<br>
+                            <span class="history-label">【主な記録】</span>
+                            4×100MR M35世界記録保持<br>
+                            4×100MR優勝(国民体育大会)<br>
+                            西日本インカレ 200M優勝<br>
+                            日本学生個人選手権 200M 3位<br>
+                            日本インカレ 200M入賞<br>
+                            日本選手権 200M入賞
+                        </div>
+                        <div class="card-comment">
+                            昨日の自分から1歩踏み出す。その積み重ねの先に目標達成があると信じています。歩幅は小さくても良いので、その1歩を踏み出せるようにサポートしていきます。
+                        </div>
                     </div>
                 </div>
 
@@ -514,16 +572,21 @@
                     </div>
                     <span class="card-role">コーチ（中長距離）</span>
                     <div class="card-name">田中 飛鳥</div>
-                    <div class="card-history">
-                        <span class="history-label">【経歴】</span>
-                        九州国際大学付属高校 → 東海大学<br><br>
-                        <span class="history-label">【主な記録】</span>
-                        5000m: 14分07秒85 <br>(2025年諫早ナイター記録会)<br>
-                        10000m: 28分40秒96 <br>(2010年日体大記録会)<br>
-                        マラソン: 2時間10分02秒 <br>(福岡国際マラソン2025)
-                    </div>
-                    <div class="card-comment">
-                        自身が現役という強みを活かし、学生と一緒に汗を流すことで切磋琢磨して高め合っていきます。
+                    <button class="toggle-btn" onclick="toggleStaff(this)">
+                        プロフィールを見る <span class="arrow">▼</span>
+                    </button>
+                    <div class="staff-details">
+                        <div class="card-history">
+                            <span class="history-label">【経歴】</span>
+                            九州国際大学付属高校 → 東海大学<br><br>
+                            <span class="history-label">【主な記録】</span>
+                            5000m: 14分07秒85 <br>(2025年諫早ナイター記録会)<br>
+                            10000m: 28分40秒96 <br>(2010年日体大記録会)<br>
+                            マラソン: 2時間10分02秒 <br>(福岡国際マラソン2025)
+                        </div>
+                        <div class="card-comment">
+                            自身が現役という強みを活かし、学生と一緒に汗を流すことで切磋琢磨して高め合っていきます。
+                        </div>
                     </div>
                 </div>
 
@@ -549,12 +612,12 @@
                 <div class="card">
                     <div class="card-role">副主将</div>
                     <div class="card-name">稲村 倖誠</div>
-                    <div class="card-sub">人間科学学部 3年 / 短距離</div>
+                    <div class="card-sub">商学部 2年 / 短距離</div>
                 </div>
             </div>
         </section>
 
-        <!-- 4. 大学記録一覧（スプレッドシートから自動読み込み） -->
+        <!-- 4. 大学記録一覧 -->
         <section id="records">
             <div class="section-header-wrapper">
                 <h2 class="section-title">⏱ 大学記録 </h2>
@@ -589,7 +652,7 @@
         <p>&copy; 2026 西南学院大学陸上競技部 All Rights Reserved.</p>
     </footer>
 
-    <!-- スプレッドシート自動読み込み処理 -->
+    <!-- JavaScript処理 -->
     <script>
         // 1. 大会結果用 CSV URL
         const resultsCsvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSFamKROQo2Htuxzfj2sfn3FCrw6ZMNCW4kuXFwl-qa8LsrmyeXFr6I2y7E-4C8Rx0XNfYLoeiBGdGa/pub?gid=0&single=true&output=csv';
@@ -661,7 +724,6 @@
                     const name = columns[2] || '';
                     const year = columns[3] || '';
 
-                    // タイム自動整形
                     kiroku = formatTrackRecord(kiroku);
 
                     const tr = document.createElement('tr');
@@ -679,11 +741,10 @@
             }
         }
 
-        // 安全なタイムフォーマット整形関数
+        // タイム自動整形関数
         function formatTrackRecord(text) {
             if (!text) return '';
 
-            // 1. 風速データ（括弧部分）を保持
             let wind = '';
             const windMatch = text.match(/\([^)]+\)/);
             if (windMatch) {
@@ -691,24 +752,35 @@
                 text = text.replace(/\([^)]+\)/, '').trim();
             }
 
-            // 2. 記号を除去して数値のみに
             const nums = text.replace(/\D/g, '');
             let formatted = text;
 
-            // 100m〜400mなどの秒単位（例: 1049 -> 10"49, 4863 -> 48"63）
             if (nums.length === 4 && !text.includes("'")) {
                 formatted = nums.substring(0, 2) + '"' + nums.substring(2);
             } 
-            // 中長距離などの分単位（例: 15664 -> 1'56"64）
             else if (nums.length === 5) {
                 formatted = nums[0] + "'" + nums.substring(1, 3) + '"' + nums.substring(3);
             } 
-            // 長距離（例: 144692 -> 14'46"92）
             else if (nums.length === 6) {
                 formatted = nums.substring(0, 2) + "'" + nums.substring(2, 4) + '"' + nums.substring(4);
             }
 
             return formatted + wind;
+        }
+
+        // --- ③ スタッフ展開・収納切り替え関数 ---
+        function toggleStaff(button) {
+            const details = button.nextElementSibling;
+            const arrow = button.querySelector('.arrow');
+            
+            button.classList.toggle('active');
+            details.classList.toggle('open');
+
+            if (details.classList.contains('open')) {
+                button.childNodes[0].textContent = '閉じる ';
+            } else {
+                button.childNodes[0].textContent = 'プロフィールを見る ';
+            }
         }
 
         // ページ読み込み完了時に実行
