@@ -413,6 +413,58 @@
             color: #666;
         }
 
+        /* --- スポンサーセクション用スタイル --- */
+        .sponsor-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.2rem;
+            margin-top: 1rem;
+        }
+
+        .sponsor-card {
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1.2rem;
+            background: #ffffff;
+            transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .sponsor-card:hover {
+            border-color: var(--primary-color);
+            box-shadow: 0 4px 12px rgba(0, 90, 54, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .sponsor-link {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .sponsor-name {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 0.3rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .sponsor-name::after {
+            content: "🔗";
+            font-size: 0.85rem;
+            opacity: 0.7;
+        }
+
+        .sponsor-location {
+            font-size: 0.85rem;
+            color: #666;
+        }
+
         /* フッター */
         footer {
             background-color: var(--primary-color);
@@ -458,6 +510,7 @@
                 <li><a href="#results">大会結果</a></li>
                 <li><a href="#staff">スタッフ紹介</a></li>
                 <li><a href="#executives">幹部紹介</a></li>
+                <li><a href="#sponsors">スポンサー</a></li>
                 <li><a href="#records">大学記録</a></li>
             </ul>
         </nav>
@@ -616,7 +669,41 @@
             </div>
         </section>
 
-        <!-- 4. 大学記録一覧 -->
+        <!-- 4. スポンサー（支援企業）紹介 -->
+        <section id="sponsors">
+            <h2 class="section-title"> 支援企業名 <span style="font-size: 0.85rem; font-weight: normal; color: #666; margin-left: 0.5rem;">（2026年9月15日時点）</span></h2>
+            <div class="sponsor-grid">
+                <div class="sponsor-card">
+                    <a href="https://yoshimura-group.jp/" target="_blank" rel="noopener noreferrer" class="sponsor-link">
+                        <div class="sponsor-name">株式会社吉村</div>
+                        <div class="sponsor-location">本社: 山口県宇部市</div>
+                    </a>
+                </div>
+
+                <div class="sponsor-card">
+                    <a href="https://www.qtnet.co.jp/" target="_blank" rel="noopener noreferrer" class="sponsor-link">
+                        <div class="sponsor-name">株式会社QTnet</div>
+                        <div class="sponsor-location">本社: 福岡県福岡市</div>
+                    </a>
+                </div>
+
+                <div class="sponsor-card">
+                    <a href="https://www.bing.com/ck/a?!&&p=aeb77801cf560fa6ed17a153f1e6cb941c3d45c0545054522354dd6d4b7f7a02JmltdHM9MTc5MDAzNTIwMA&ptn=3&ver=2&hsh=4&fclid=261c783e-1c30-6145-3442-6c6d1dbb600b&psq=%e6%a0%aa%e5%bc%8f%e4%bc%9a%e7%a4%be%e4%bd%90%e5%96%9c&u=a1aHR0cHM6Ly93d3cua2Vuc2V0dW1hcC5jb20vY29tcGFueS82NDI4NzgvcHJvZmlsZS5waHA" target="_blank" rel="noopener noreferrer" class="sponsor-link">
+                        <div class="sponsor-name">株式会社佐喜</div>
+                        <div class="sponsor-location">本社: 福岡県北九州市</div>
+                    </a>
+                </div>
+
+                <div class="sponsor-card">
+                    <a href="https://www.shibuta.co.jp/" target="_blank" rel="noopener noreferrer" class="sponsor-link">
+                        <div class="sponsor-name">株式会社シブタ</div>
+                        <div class="sponsor-location">本社: 福岡県久留米市</div>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. 大学記録一覧 -->
         <section id="records">
             <div class="section-header-wrapper">
                 <h2 class="section-title">⏱ 大学記録 </h2>
