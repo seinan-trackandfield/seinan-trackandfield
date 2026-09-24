@@ -248,10 +248,10 @@
             gap: 1.5rem;
         }
 
-        /* --- スタッフ紹介専用カードスタイル --- */
+        /* --- スタッフ紹介専用カードスタイル (上段2人・下段2人) --- */
         .staff-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(2, 1fr);
             gap: 1.5rem;
             align-items: start;
         }
@@ -271,14 +271,6 @@
 
         .staff-card:hover {
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-        }
-
-        /* 部長カード（1列目左揃え） */
-        .staff-card-top {
-            grid-column: 1 / -1;
-            max-width: 320px;
-            margin: 0 auto 0 0;
-            width: 100%;
         }
 
         .staff-img-wrapper {
@@ -490,7 +482,7 @@
                 font-size: 0.9rem;
             }
             .staff-grid {
-                grid-template-columns: 1fr;
+                grid-template-columns: 1fr; /* スマホでは縦1列 */
             }
             .section-header-wrapper {
                 flex-direction: column;
@@ -526,7 +518,7 @@
 
     <div class="container">
 
-        <!-- 1. 大会結果（最新が上にくるよう修正） -->
+        <!-- 1. 大会結果 -->
         <section id="results" class="results-section">
             <h2 class="section-title"> 大会結果 - Latest Results </h2>
             <p style="font-size:0.85rem; color:#666; margin-bottom: 1rem;">※最新の試合結果を随時更新しています。</p>
@@ -536,13 +528,13 @@
             </div>
         </section>
 
-        <!-- 2. スタッフ紹介 -->
+        <!-- 2. スタッフ紹介 (上段: 部長/監督, 下段: コーチ2名) -->
         <section id="staff">
             <h2 class="section-title"> スタッフ紹介</h2>
             <div class="staff-grid">
 
-                <!-- 横尾 部長 -->
-                <div class="staff-card staff-card-top">
+                <!-- 【上段左】横尾 部長 -->
+                <div class="staff-card">
                     <div class="staff-img-wrapper">
                         <img src="横尾亘.jpg" alt="横尾 亘">
                     </div>
@@ -565,7 +557,7 @@
                     </div>
                 </div>
 
-                <!-- 相良 監督 -->
+                <!-- 【上段右】相良 監督 -->
                 <div class="staff-card">
                     <div class="staff-img-wrapper">
                         <img src="相良敬之.jpg" alt="相良 敬之">
@@ -582,6 +574,8 @@
                             <span class="history-label">【主な記録】</span>
                             3000m障害: 9分27秒41<br>
                             (1997年九州学生選手権)
+　　　　　　　　　　　　　　フルマラソン: 2時間39分04秒<br>
+　　　　　　　　　　　　　　(1998年延岡西日本マラソン）
                         </div>
                         <div class="card-comment">
                             大学の部活は社会人になるために必要な「人間力」を高める場だと考えています。競技面だけでなく、私自身の社会人(元銀行員)経験を活かした指導をして参ります。
@@ -589,7 +583,7 @@
                     </div>
                 </div>
 
-                <!-- 當眞 コーチ -->
+                <!-- 【下段左】當眞 コーチ -->
                 <div class="staff-card">
                     <div class="staff-img-wrapper">
                         <img src="當眞さん.jpg" alt="當眞 祐樹">
@@ -617,7 +611,7 @@
                     </div>
                 </div>
 
-                <!-- 田中 コーチ -->
+                <!-- 【下段右】田中 コーチ -->
                 <div class="staff-card">
                     <div class="staff-img-wrapper">
                         <img src="田中飛鳥.jpg" alt="田中 飛鳥">
@@ -645,20 +639,20 @@
             </div>
         </section>
 
-        <!-- 3. 幹部部員紹介 -->
+        <!-- 3. 学生幹部部員紹介 -->
         <section id="executives">
-            <h2 class="section-title"> 幹部部員紹介</h2>
+            <h2 class="section-title"> 学生幹部部員紹介</h2>
             <div class="grid">
                 <div class="card">
                     <div class="card-role">主将</div>
-                    <div class="card-name">古賀 美帆</div>
-                    <div class="card-sub">人間科学学部 3年 / フィールド</div>
+                    <div class="card-name">角本 拓真</div>
+                    <div class="card-sub">外国語学部 2年 / 短距離</div>
                 </div>
 
                 <div class="card">
                     <div class="card-role">主務</div>
-                    <div class="card-name">大川内 唯</div>
-                    <div class="card-sub">人間科学学部 3年 / 中長距離</div>
+                    <div class="card-name">菅 美咲</div>
+                    <div class="card-sub">経済学部 2年 / 中長距離</div>
                 </div>
 
                 <div class="card">
