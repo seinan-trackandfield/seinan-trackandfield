@@ -405,18 +405,34 @@
             color: #666;
         }
 
-        /* --- スポンサーセクション用スタイル --- */
-        .sponsor-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.2rem;
+ /* --- スポンサーセクション用スタイル --- */
+        .sponsor-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1.8rem;
             margin-top: 1rem;
         }
 
+        /* ランク1：最大横2社（1行2列、増えたら下に折り返し） */
+        .sponsor-rank.rank-1 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.2rem;
+        }
+
+        /* ランク2 & ランク3：横3社固定（1行3列、増えたら4社目以降は下に自動折り返し） */
+        .sponsor-rank.rank-2,
+        .sponsor-rank.rank-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+
+        /* 基本カードデザイン */
         .sponsor-card {
             border: 1px solid #e2e8f0;
             border-radius: 8px;
-            padding: 1.2rem;
+            padding: 1.1rem;
             background: #ffffff;
             transition: all 0.2s ease;
             display: flex;
@@ -426,8 +442,24 @@
 
         .sponsor-card:hover {
             border-color: var(--primary-color);
-            box-shadow: 0 4px 12px rgba(0, 90, 54, 0.1);
+            box-shadow: 0 4px 12px rgba(0, 90, 54, 0.12);
             transform: translateY(-2px);
+        }
+
+        /* ランク1専用（トップクラス）の存在感あるカード */
+        .sponsor-card.rank-1-card {
+            border: 2px solid var(--primary-color);
+            background: linear-gradient(135deg, #ffffff 0%, #f0f7f4 100%);
+            padding: 1.5rem;
+            box-shadow: 0 3px 10px rgba(0, 90, 54, 0.08);
+        }
+
+        .sponsor-card.rank-1-card .sponsor-name {
+            font-size: 1.3rem;
+        }
+
+        .sponsor-card.rank-1-card .sponsor-location {
+            font-size: 0.9rem;
         }
 
         .sponsor-link {
@@ -437,7 +469,7 @@
         }
 
         .sponsor-name {
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             font-weight: bold;
             color: var(--primary-color);
             margin-bottom: 0.3rem;
@@ -455,6 +487,22 @@
         .sponsor-location {
             font-size: 0.85rem;
             color: #666;
+        }
+
+        /* レスポンシブ調整（タブレット・スマホ対応） */
+        @media (max-width: 850px) {
+            .sponsor-rank.rank-2,
+            .sponsor-rank.rank-3 {
+                grid-template-columns: repeat(2, 1fr); /* 中画面では2列 */
+            }
+        }
+
+        @media (max-width: 550px) {
+            .sponsor-rank.rank-1,
+            .sponsor-rank.rank-2,
+            .sponsor-rank.rank-3 {
+                grid-template-columns: 1fr; /* スマホでは縦1列 */
+            }
         }
 
         /* フッター */
@@ -663,36 +711,48 @@
             </div>
         </section>
 
-        <!-- 4. スポンサー（支援企業）紹介 -->
+<!-- 4. スポンサー（支援企業）紹介 -->
         <section id="sponsors">
-            <h2 class="section-title"> 支援企業名 <span style="font-size: 0.85rem; font-weight: normal; color: #666; margin-left: 0.5rem;">（2026年9月15日時点）</span></h2>
-            <div class="sponsor-grid">
-                <div class="sponsor-card">
-                    <a href="http://yoshimura-group.jp/" target="_blank" rel="noopener noreferrer" class="sponsor-link">
-                        <div class="sponsor-name">株式会社吉村</div>
-                        <div class="sponsor-location">本社: 山口県宇部市</div>
-                    </a>
+            <h2 class="section-title"> 支援企業 <span style="font-size: 0.85rem; font-weight: normal; color: #666; margin-left: 0.5rem;">（2026年9月15日時点）</span></h2>
+            
+            <div class="sponsor-container">
+                <!-- 【ランク1：トップクラス】(最大横2社 / 横並び・縦拡張可能) -->
+                <div class="sponsor-rank rank-1">
+                    <div class="sponsor-card rank-1-card">
+                        <a href="http://yoshimura-group.jp/" target="_blank" rel="noopener noreferrer" class="sponsor-link">
+                            <div class="sponsor-name">株式会社吉村</div>
+                            <div class="sponsor-location">本社: 山口県宇部市</div>
+                        </a>
+                    </div>
                 </div>
 
-                <div class="sponsor-card">
-                    <a href="https://www.qtnet.co.jp/" target="_blank" rel="noopener noreferrer" class="sponsor-link">
-                        <div class="sponsor-name">株式会社QTnet</div>
-                        <div class="sponsor-location">本社: 福岡県福岡市</div>
-                    </a>
+                <!-- 【ランク2：ミドルクラス】(横3社固定 / 縦拡張可能・現在空枠) -->
+                <!-- 企業が追加されたらここに <div class="sponsor-card">...</div> を追加していきます -->
+                <div class="sponsor-rank rank-2" style="display: none;">
                 </div>
 
-                <div class="sponsor-card">
-                    <a href="https://www.bing.com/ck/a?!&&p=aeb77801cf560fa6ed17a153f1e6cb941c3d45c0545054522354dd6d4b7f7a02JmltdHM9MTc5MDAzNTIwMA&ptn=3&ver=2&hsh=4&fclid=261c783e-1c30-6145-3442-6c6d1dbb600b&psq=%e6%a0%aa%e5%bc%8f%e4%bc%9a%e7%a4%be%e4%bd%90%e5%96%9c&u=a1aHR0cHM6Ly93d3cua2Vuc2V0dW1hcC5jb20vY29tcGFueS82NDI4NzgvcHJvZmlsZS5waHA" target="_blank" rel="noopener noreferrer" class="sponsor-link">
-                        <div class="sponsor-name">株式会社佐喜</div>
-                        <div class="sponsor-location">本社: 福岡県北九州市</div>
-                    </a>
-                </div>
+                <!-- 【ランク3：ベースクラス】(横3社固定 / 縦拡張可能) -->
+                <div class="sponsor-rank rank-3">
+                    <div class="sponsor-card">
+                        <a href="https://www.qtnet.co.jp/" target="_blank" rel="noopener noreferrer" class="sponsor-link">
+                            <div class="sponsor-name">株式会社QTnet</div>
+                            <div class="sponsor-location">本社: 福岡県福岡市</div>
+                        </a>
+                    </div>
 
-                <div class="sponsor-card">
-                    <a href="https://shibuta.net/company" target="_blank" rel="noopener noreferrer" class="sponsor-link">
-                        <div class="sponsor-name">株式会社シブタ</div>
-                        <div class="sponsor-location">本社: 福岡県久留米市</div>
-                    </a>
+                    <div class="sponsor-card">
+                        <a href="https://www.bing.com/ck/a?!&&p=aeb77801cf560fa6ed17a153f1e6cb941c3d45c0545054522354dd6d4b7f7a02JmltdHM9MTc5MDAzNTIwMA&ptn=3&ver=2&hsh=4&fclid=261c783e-1c30-6145-3442-6c6d1dbb600b&psq=%e6%a0%aa%e5%bc%8f%e4%bc%9a%e7%a4%be%e4%bd%90%e5%96%9c&u=a1aHR0cHM6Ly93d3cua2Vuc2V0dW1hcC5jb20vY29tcGFueS82NDI4NzgvcHJvZmlsZS5waHA" target="_blank" rel="noopener noreferrer" class="sponsor-link">
+                            <div class="sponsor-name">株式会社佐喜</div>
+                            <div class="sponsor-location">本社: 福岡県北九州市</div>
+                        </a>
+                    </div>
+
+                    <div class="sponsor-card">
+                        <a href="https://shibuta.net/company" target="_blank" rel="noopener noreferrer" class="sponsor-link">
+                            <div class="sponsor-name">株式会社シブタ</div>
+                            <div class="sponsor-location">本社: 福岡県久留米市</div>
+                        </a>
+                    </div>
                 </div>
             </div>
         </section>
@@ -881,7 +941,7 @@ function formatTrackRecord(syomoku, text) {
 
     return formatted + wind;
 }
-     
+
         function toggleStaff(button) {
             const details = button.nextElementSibling;
             
