@@ -405,22 +405,49 @@
             color: #666;
         }
 
- /* --- スポンサーセクション用スタイル --- */
+        /* --- スポンサーセクション用スタイル --- */
         .sponsor-container {
             display: flex;
             flex-direction: column;
-            gap: 1.8rem;
+            gap: 2rem;
             margin-top: 1rem;
         }
 
-        /* ランク1：最大横2社（1行2列、増えたら下に折り返し） */
+        .sponsor-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .sponsor-rank-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            padding-left: 0.6rem;
+            border-left: 4px solid var(--primary-color);
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .sponsor-rank-title.gold {
+            border-left-color: #d4af37;
+            color: #8a6d05;
+        }
+
+        .sponsor-rank-title.silver {
+            border-left-color: #a0a0a0;
+            color: #555555;
+        }
+
+        /* ランク1：最大横2社 */
         .sponsor-rank.rank-1 {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 1.2rem;
         }
 
-        /* ランク2 & ランク3：横3社固定（1行3列、増えたら4社目以降は下に自動折り返し） */
+        /* ランク2 & ランク3：横3社固定 */
         .sponsor-rank.rank-2,
         .sponsor-rank.rank-3 {
             display: grid;
@@ -446,20 +473,31 @@
             transform: translateY(-2px);
         }
 
-        /* ランク1専用（トップクラス）の存在感あるカード */
+        /* ゴールド（ランク1）専用カード */
         .sponsor-card.rank-1-card {
-            border: 2px solid var(--primary-color);
-            background: linear-gradient(135deg, #ffffff 0%, #f0f7f4 100%);
+            border: 2px solid #d4af37;
+            background: linear-gradient(135deg, #ffffff 0%, #fffdf0 100%);
             padding: 1.5rem;
-            box-shadow: 0 3px 10px rgba(0, 90, 54, 0.08);
+            box-shadow: 0 3px 10px rgba(212, 175, 55, 0.15);
         }
 
         .sponsor-card.rank-1-card .sponsor-name {
             font-size: 1.3rem;
+            color: #8a6d05;
         }
 
         .sponsor-card.rank-1-card .sponsor-location {
             font-size: 0.9rem;
+        }
+
+        /* 空枠用プレースホルダー */
+        .sponsor-card.empty-card {
+            border: 1px dashed #ccc;
+            background: #fafafa;
+            color: #888;
+            text-align: center;
+            padding: 1rem;
+            font-size: 0.85rem;
         }
 
         .sponsor-link {
@@ -493,7 +531,7 @@
         @media (max-width: 850px) {
             .sponsor-rank.rank-2,
             .sponsor-rank.rank-3 {
-                grid-template-columns: repeat(2, 1fr); /* 中画面では2列 */
+                grid-template-columns: repeat(2, 1fr);
             }
         }
 
@@ -501,7 +539,7 @@
             .sponsor-rank.rank-1,
             .sponsor-rank.rank-2,
             .sponsor-rank.rank-3 {
-                grid-template-columns: 1fr; /* スマホでは縦1列 */
+                grid-template-columns: 1fr;
             }
         }
 
@@ -530,7 +568,7 @@
                 font-size: 0.9rem;
             }
             .staff-grid {
-                grid-template-columns: 1fr; /* スマホでは縦1列 */
+                grid-template-columns: 1fr;
             }
             .section-header-wrapper {
                 flex-direction: column;
@@ -711,47 +749,58 @@
             </div>
         </section>
 
-<!-- 4. スポンサー（支援企業）紹介 -->
+        <!-- 4. スポンサー（支援企業）紹介 -->
         <section id="sponsors">
-            <h2 class="section-title"> 支援企業 <span style="font-size: 0.85rem; font-weight: normal; color: #666; margin-left: 0.5rem;">（2026年9月15日時点）</span></h2>
+            <h2 class="section-title"> スポンサー企業 <span style="font-size: 0.85rem; font-weight: normal; color: #666; margin-left: 0.5rem;">（2026年9月15日時点）</span></h2>
             
             <div class="sponsor-container">
-                <!-- 【ランク1：トップクラス】(最大横2社 / 横並び・縦拡張可能) -->
-                <div class="sponsor-rank rank-1">
-                    <div class="sponsor-card rank-1-card">
-                        <a href="http://yoshimura-group.jp/" target="_blank" rel="noopener noreferrer" class="sponsor-link">
-                            <div class="sponsor-name">株式会社吉村</div>
-                            <div class="sponsor-location">本社: 山口県宇部市</div>
-                        </a>
+                <!-- ゴールドスポンサー -->
+                <div class="sponsor-group">
+                    <div class="sponsor-rank-title gold"> ゴールドスポンサー</div>
+                    <div class="sponsor-rank rank-1">
+                        <div class="sponsor-card rank-1-card">
+                            <a href="http://yoshimura-group.jp/" target="_blank" rel="noopener noreferrer" class="sponsor-link">
+                                <div class="sponsor-name">株式会社吉村</div>
+                                <div class="sponsor-location">本社: 山口県宇部市</div>
+                            </a>
+                        </div>
                     </div>
                 </div>
 
-                <!-- 【ランク2：ミドルクラス】(横3社固定 / 縦拡張可能・現在空枠) -->
-                <!-- 企業が追加されたらここに <div class="sponsor-card">...</div> を追加していきます -->
-                <div class="sponsor-rank rank-2" style="display: none;">
+                <!-- シルバースポンサー -->
+                <div class="sponsor-group">
+                    <div class="sponsor-rank-title silver"> シルバースポンサー</div>
+                    <div class="sponsor-rank rank-2">
+                        <div class="sponsor-card empty-card">
+                            ---
+                        </div>
+                    </div>
                 </div>
 
-                <!-- 【ランク3：ベースクラス】(横3社固定 / 縦拡張可能) -->
-                <div class="sponsor-rank rank-3">
-                    <div class="sponsor-card">
-                        <a href="https://www.qtnet.co.jp/" target="_blank" rel="noopener noreferrer" class="sponsor-link">
-                            <div class="sponsor-name">株式会社QTnet</div>
-                            <div class="sponsor-location">本社: 福岡県福岡市</div>
-                        </a>
-                    </div>
+                <!-- 支援企業 -->
+                <div class="sponsor-group">
+                    <div class="sponsor-rank-title"> 支援企業</div>
+                    <div class="sponsor-rank rank-3">
+                        <div class="sponsor-card">
+                            <a href="https://www.qtnet.co.jp/" target="_blank" rel="noopener noreferrer" class="sponsor-link">
+                                <div class="sponsor-name">株式会社QTnet</div>
+                                <div class="sponsor-location">本社: 福岡県福岡市</div>
+                            </a>
+                        </div>
 
-                    <div class="sponsor-card">
-                        <a href="https://www.bing.com/ck/a?!&&p=aeb77801cf560fa6ed17a153f1e6cb941c3d45c0545054522354dd6d4b7f7a02JmltdHM9MTc5MDAzNTIwMA&ptn=3&ver=2&hsh=4&fclid=261c783e-1c30-6145-3442-6c6d1dbb600b&psq=%e6%a0%aa%e5%bc%8f%e4%bc%9a%e7%a4%be%e4%bd%90%e5%96%9c&u=a1aHR0cHM6Ly93d3cua2Vuc2V0dW1hcC5jb20vY29tcGFueS82NDI4NzgvcHJvZmlsZS5waHA" target="_blank" rel="noopener noreferrer" class="sponsor-link">
-                            <div class="sponsor-name">株式会社佐喜</div>
-                            <div class="sponsor-location">本社: 福岡県北九州市</div>
-                        </a>
-                    </div>
+                        <div class="sponsor-card">
+                            <a href="https://www.bing.com/ck/a?!&&p=aeb77801cf560fa6ed17a153f1e6cb941c3d45c0545054522354dd6d4b7f7a02JmltdHM9MTc5MDAzNTIwMA&ptn=3&ver=2&hsh=4&fclid=261c783e-1c30-6145-3442-6c6d1dbb600b&psq=%e6%a0%aa%e5%bc%8f%e4%bc%9a%e7%a4%be%e4%bd%90%e5%96%9c&u=a1aHR0cHM6Ly93d3cua2Vuc2V0dW1hcC5jb20vY29tcGFueS82NDI4NzgvcHJvZmlsZS5waHA" target="_blank" rel="noopener noreferrer" class="sponsor-link">
+                                <div class="sponsor-name">株式会社佐喜</div>
+                                <div class="sponsor-location">本社: 福岡県北九州市</div>
+                            </a>
+                        </div>
 
-                    <div class="sponsor-card">
-                        <a href="https://shibuta.net/company" target="_blank" rel="noopener noreferrer" class="sponsor-link">
-                            <div class="sponsor-name">株式会社シブタ</div>
-                            <div class="sponsor-location">本社: 福岡県久留米市</div>
-                        </a>
+                        <div class="sponsor-card">
+                            <a href="https://shibuta.net/company" target="_blank" rel="noopener noreferrer" class="sponsor-link">
+                                <div class="sponsor-name">株式会社シブタ</div>
+                                <div class="sponsor-location">本社: 福岡県久留米市</div>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -843,7 +892,7 @@
             }
         }
 
-// --- ② 大学記録の読み込み ---
+        // --- ② 大学記録の読み込み ---
         async function loadRecords() {
             try {
                 if (recordsCsvUrl.includes('★')) {
@@ -883,64 +932,61 @@
             }
         }
 
-function formatTrackRecord(syomoku, text) {
-    if (!text) return '';
+        function formatTrackRecord(syomoku, text) {
+            if (!text) return '';
 
-    // 1. 風速表記（例: (+1.0m) ）を取り出して退避
-    let wind = '';
-    const windMatch = text.match(/\([^)]+\)/);
-    if (windMatch) {
-        wind = ' ' + windMatch[0];
-        text = text.replace(/\([^)]+\)/, '').trim();
-    }
+            // 1. 風速表記（例: (+1.0m) ）を取り出して退避
+            let wind = '';
+            const windMatch = text.match(/\([^)]+\)/);
+            if (windMatch) {
+                wind = ' ' + windMatch[0];
+                text = text.replace(/\([^)]+\)/, '').trim();
+            }
 
-    // 2. 元の文字列に含まれる重複したダブルクォーテーションやシングルクォーテーションを綺麗に掃除
-    text = text.replace(/"{2,}/g, '"').replace(/'{2,}/g, "'").trim();
+            // 2. 元の文字列に含まれる重複したダブルクォーテーションやシングルクォーテーションを綺麗に掃除
+            text = text.replace(/"{2,}/g, '"').replace(/'{2,}/g, "'").trim();
 
-    // 3. 混成競技（十種競技・七種競技・混成）: 点数表記
-    if (syomoku.includes('十種') || syomoku.includes('七種') || syomoku.includes('混成')) {
-        if (text.includes('点')) return text + wind;
-        const nums = text.replace(/\D/g, '');
-        return nums ? nums + '点' + wind : text + wind;
-    }
+            // 3. 混成競技（十種競技・七種競技・混成）: 点数表記
+            if (syomoku.includes('十種') || syomoku.includes('七種') || syomoku.includes('混成')) {
+                if (text.includes('点')) return text + wind;
+                const nums = text.replace(/\D/g, '');
+                return nums ? nums + '点' + wind : text + wind;
+            }
 
-    // 4. 跳躍・投擲種目: m表記
-    const isFieldEvent = ['跳', '投', '砲丸', '円盤', 'ハンマー', 'やり'].some(key => syomoku.includes(key));
-    if (isFieldEvent) {
-        if (text.includes('m')) return text + wind;
-        const nums = text.replace(/\D/g, '');
-        if (nums.length === 3) {
-            return nums[0] + 'm' + nums.substring(1) + wind;
-        } else if (nums.length === 4) {
-            return nums.substring(0, 2) + 'm' + nums.substring(2) + wind;
+            // 4. 跳躍・投擲種目: m表記
+            const isFieldEvent = ['跳', '投', '砲丸', '円盤', 'ハンマー', 'やり'].some(key => syomoku.includes(key));
+            if (isFieldEvent) {
+                if (text.includes('m')) return text + wind;
+                const nums = text.replace(/\D/g, '');
+                if (nums.length === 3) {
+                    return nums[0] + 'm' + nums.substring(1) + wind;
+                } else if (nums.length === 4) {
+                    return nums.substring(0, 2) + 'm' + nums.substring(2) + wind;
+                }
+                return (nums ? nums + 'm' : text) + wind;
+            }
+
+            // 5. トラック種目: すでに ' や " が含まれている場合は掃除したテキストをそのまま返す
+            if (/[="'`]/.test(text)) {
+                return text + wind;
+            }
+
+            // 6. 記号が一切入っていない純粋な数字のみの場合の自動フォーマット
+            const nums = text.replace(/\D/g, '');
+            let formatted = text;
+
+            if (nums.length === 4) {
+                formatted = nums.substring(0, 2) + '"' + nums.substring(2);
+            } 
+            else if (nums.length === 5) {
+                formatted = nums[0] + "'" + nums.substring(1, 3) + '"' + nums.substring(3);
+            } 
+            else if (nums.length === 6) {
+                formatted = nums.substring(0, 2) + "'" + nums.substring(2, 4) + '"' + nums.substring(4);
+            }
+
+            return formatted + wind;
         }
-        return (nums ? nums + 'm' : text) + wind;
-    }
-
-    // 5. トラック種目: すでに ' や " が含まれている場合は掃除したテキストをそのまま返す
-    if (/[="'`]/.test(text)) {
-        return text + wind;
-    }
-
-    // 6. 記号が一切入っていない純粋な数字のみの場合の自動フォーマット
-    const nums = text.replace(/\D/g, '');
-    let formatted = text;
-
-    if (nums.length === 4) {
-        // 例: 1488 -> 14"88
-        formatted = nums.substring(0, 2) + '"' + nums.substring(2);
-    } 
-    else if (nums.length === 5) {
-        // 例: 12345 -> 1'23"45
-        formatted = nums[0] + "'" + nums.substring(1, 3) + '"' + nums.substring(3);
-    } 
-    else if (nums.length === 6) {
-        // 例: 123456 -> 12'34"56
-        formatted = nums.substring(0, 2) + "'" + nums.substring(2, 4) + '"' + nums.substring(4);
-    }
-
-    return formatted + wind;
-}
 
         function toggleStaff(button) {
             const details = button.nextElementSibling;
