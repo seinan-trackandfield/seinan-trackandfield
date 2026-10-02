@@ -751,56 +751,30 @@
 
         <!-- 4. スポンサー（支援企業）紹介 -->
         <section id="sponsors">
-            <h2 class="section-title"> スポンサー企業 <span style="font-size: 0.85rem; font-weight: normal; color: #666; margin-left: 0.5rem;">（2026年9月15日時点）</span></h2>
+            <h2 class="section-title"> スポンサー企業</h2>
             
             <div class="sponsor-container">
                 <!-- ゴールドスポンサー -->
                 <div class="sponsor-group">
                     <div class="sponsor-rank-title gold"> ゴールドスポンサー</div>
-                    <div class="sponsor-rank rank-1">
-                        <div class="sponsor-card rank-1-card">
-                            <a href="http://yoshimura-group.jp/" target="_blank" rel="noopener noreferrer" class="sponsor-link">
-                                <div class="sponsor-name">株式会社吉村</div>
-                                <div class="sponsor-location">本社: 山口県宇部市</div>
-                            </a>
-                        </div>
+                    <div class="sponsor-rank rank-1" id="sponsor-rank-1">
+                        <p style="padding: 0.5rem; color:#888;">読み込み中...</p>
                     </div>
                 </div>
 
                 <!-- シルバースポンサー -->
                 <div class="sponsor-group">
                     <div class="sponsor-rank-title silver"> シルバースポンサー</div>
-                    <div class="sponsor-rank rank-2">
-                        <div class="sponsor-card empty-card">
-                            ---
-                        </div>
+                    <div class="sponsor-rank rank-2" id="sponsor-rank-2">
+                        <p style="padding: 0.5rem; color:#888;">読み込み中...</p>
                     </div>
                 </div>
 
                 <!-- 支援企業 -->
                 <div class="sponsor-group">
                     <div class="sponsor-rank-title"> 支援企業</div>
-                    <div class="sponsor-rank rank-3">
-                        <div class="sponsor-card">
-                            <a href="https://www.qtnet.co.jp/" target="_blank" rel="noopener noreferrer" class="sponsor-link">
-                                <div class="sponsor-name">株式会社QTnet</div>
-                                <div class="sponsor-location">本社: 福岡県福岡市</div>
-                            </a>
-                        </div>
-
-                        <div class="sponsor-card">
-                            <a href="https://www.bing.com/ck/a?!&&p=aeb77801cf560fa6ed17a153f1e6cb941c3d45c0545054522354dd6d4b7f7a02JmltdHM9MTc5MDAzNTIwMA&ptn=3&ver=2&hsh=4&fclid=261c783e-1c30-6145-3442-6c6d1dbb600b&psq=%e6%a0%aa%e5%bc%8f%e4%bc%9a%e7%a4%be%e4%bd%90%e5%96%9c&u=a1aHR0cHM6Ly93d3cua2Vuc2V0dW1hcC5jb20vY29tcGFueS82NDI4NzgvcHJvZmlsZS5waHA" target="_blank" rel="noopener noreferrer" class="sponsor-link">
-                                <div class="sponsor-name">株式会社佐喜</div>
-                                <div class="sponsor-location">本社: 福岡県北九州市</div>
-                            </a>
-                        </div>
-
-                        <div class="sponsor-card">
-                            <a href="https://shibuta.net/company" target="_blank" rel="noopener noreferrer" class="sponsor-link">
-                                <div class="sponsor-name">株式会社シブタ</div>
-                                <div class="sponsor-location">本社: 福岡県久留米市</div>
-                            </a>
-                        </div>
+                    <div class="sponsor-rank rank-3" id="sponsor-rank-3">
+                        <p style="padding: 0.5rem; color:#888;">読み込み中...</p>
                     </div>
                 </div>
             </div>
@@ -845,6 +819,8 @@
     <script>
         const resultsCsvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSFamKROQo2Htuxzfj2sfn3FCrw6ZMNCW4kuXFwl-qa8LsrmyeXFr6I2y7E-4C8Rx0XNfYLoeiBGdGa/pub?gid=0&single=true&output=csv';
         const recordsCsvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSFamKROQo2Htuxzfj2sfn3FCrw6ZMNCW4kuXFwl-qa8LsrmyeXFr6I2y7E-4C8Rx0XNfYLoeiBGdGa/pub?gid=319677524&single=true&output=csv';
+        // スポンサー用CSV URL (ここに発行されたCSVのURLを貼り付けてください)
+        const sponsorsCsvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSFamKROQo2Htuxzfj2sfn3FCrw6ZMNCW4kuXFwl-qa8LsrmyeXFr6I2y7E-4C8Rx0XNfYLoeiBGdGa/pubhtml?gid=481522128&single=true';
 
         function parseCsvLine(line) {
             return line.split(',').map(col => col.replace(/^"|"$/g, '').trim());
@@ -855,10 +831,8 @@
             try {
                 const response = await fetch(resultsCsvUrl);
                 const data = await response.text();
-                // 行ごとに分割して見出し行を除外
                 let lines = data.trim().split('\n').slice(1);
                 
-                // 最新順（逆順）に配列をひっくり返す
                 lines.reverse();
 
                 let html = '';
@@ -914,7 +888,6 @@
                     const name = columns[2] || '';
                     const year = columns[3] || '';
 
-                    // 種目名も渡してフォーマット判定を行う
                     kiroku = formatTrackRecord(syomoku, kiroku);
 
                     const tr = document.createElement('tr');
@@ -932,10 +905,63 @@
             }
         }
 
+        // --- ③ スポンサー企業の読み込み ---
+        async function loadSponsors() {
+            if (sponsorsCsvUrl.includes('★')) {
+                document.getElementById('sponsor-rank-1').innerHTML = '<div class="sponsor-card empty-card">スプレッドシートURL未設定</div>';
+                document.getElementById('sponsor-rank-2').innerHTML = '<div class="sponsor-card empty-card">スプレッドシートURL未設定</div>';
+                document.getElementById('sponsor-rank-3').innerHTML = '<div class="sponsor-card empty-card">スプレッドシートURL未設定</div>';
+                return;
+            }
+
+            try {
+                const response = await fetch(sponsorsCsvUrl);
+                const data = await response.text();
+                const lines = data.trim().split('\n').slice(1);
+
+                let rank1Html = '';
+                let rank2Html = '';
+                let rank3Html = '';
+
+                lines.forEach(line => {
+                    if (!line.trim()) return;
+                    const columns = parseCsvLine(line);
+                    const rank = columns[0] || '';
+                    const name = columns[1] || '';
+                    const location = columns[2] || '';
+                    const url = columns[3] || '';
+
+                    if (!name || name === '---') return;
+
+                    const cardHtml = `
+                        <div class="sponsor-card ${rank.includes('1') || rank.includes('ゴールド') ? 'rank-1-card' : ''}">
+                            <a href="${url \vert{}\vert{} '#'}" ${url ? 'target="_blank" rel="noopener noreferrer"' : ''} class="sponsor-link">
+                                <div class="sponsor-name">${name}</div>${location ? `<div class="sponsor-location">${location}</div>` : ''}
+                            </a>
+                        </div>
+                    `;
+
+                    if (rank.includes('1') || rank.includes('ゴールド')) {
+                        rank1Html += cardHtml;
+                    } else if (rank.includes('2') || rank.includes('シルバー')) {
+                        rank2Html += cardHtml;
+                    } else {
+                        rank3Html += cardHtml;
+                    }
+                });
+
+                document.getElementById('sponsor-rank-1').innerHTML = rank1Html || '<div class="sponsor-card empty-card">---</div>';
+                document.getElementById('sponsor-rank-2').innerHTML = rank2Html || '<div class="sponsor-card empty-card">---</div>';
+                document.getElementById('sponsor-rank-3').innerHTML = rank3Html || '<div class="sponsor-card empty-card">---</div>';
+            } catch (error) {
+                console.error('スポンサー情報読み込みエラー:', error);
+                document.getElementById('sponsor-rank-1').innerHTML = '<div class="sponsor-card empty-card">読み込み失敗</div>';
+            }
+        }
+
         function formatTrackRecord(syomoku, text) {
             if (!text) return '';
 
-            // 1. 風速表記（例: (+1.0m) ）を取り出して退避
             let wind = '';
             const windMatch = text.match(/\([^)]+\)/);
             if (windMatch) {
@@ -943,17 +969,14 @@
                 text = text.replace(/\([^)]+\)/, '').trim();
             }
 
-            // 2. 元の文字列に含まれる重複したダブルクォーテーションやシングルクォーテーションを綺麗に掃除
             text = text.replace(/"{2,}/g, '"').replace(/'{2,}/g, "'").trim();
 
-            // 3. 混成競技（十種競技・七種競技・混成）: 点数表記
             if (syomoku.includes('十種') || syomoku.includes('七種') || syomoku.includes('混成')) {
                 if (text.includes('点')) return text + wind;
                 const nums = text.replace(/\D/g, '');
                 return nums ? nums + '点' + wind : text + wind;
             }
 
-            // 4. 跳躍・投擲種目: m表記
             const isFieldEvent = ['跳', '投', '砲丸', '円盤', 'ハンマー', 'やり'].some(key => syomoku.includes(key));
             if (isFieldEvent) {
                 if (text.includes('m')) return text + wind;
@@ -966,12 +989,10 @@
                 return (nums ? nums + 'm' : text) + wind;
             }
 
-            // 5. トラック種目: すでに ' や " が含まれている場合は掃除したテキストをそのまま返す
             if (/[="'`]/.test(text)) {
                 return text + wind;
             }
 
-            // 6. 記号が一切入っていない純粋な数字のみの場合の自動フォーマット
             const nums = text.replace(/\D/g, '');
             let formatted = text;
 
@@ -1004,6 +1025,7 @@
         window.addEventListener('DOMContentLoaded', () => {
             loadResults();
             loadRecords();
+            loadSponsors();
         });
     </script>
 </body>
