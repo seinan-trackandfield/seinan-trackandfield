@@ -935,7 +935,7 @@
 
                     const cardHtml = `
                         <div class="sponsor-card ${rank.includes('1') || rank.includes('ゴールド') ? 'rank-1-card' : ''}">
-                            <a href="${url \vert{}\vert{} '#'}" ${url ? 'target="_blank" rel="noopener noreferrer"' : ''} class="sponsor-link">
+                            <a href="${url || '#'}" ${url ? 'target="_blank" rel="noopener noreferrer"' : ''} class="sponsor-link">
                                 <div class="sponsor-name">${name}</div>${location ? `<div class="sponsor-location">${location}</div>` : ''}
                             </a>
                         </div>
@@ -956,6 +956,8 @@
             } catch (error) {
                 console.error('スポンサー情報読み込みエラー:', error);
                 document.getElementById('sponsor-rank-1').innerHTML = '<div class="sponsor-card empty-card">読み込み失敗</div>';
+                document.getElementById('sponsor-rank-2').innerHTML = '<div class="sponsor-card empty-card">読み込み失敗</div>';
+                document.getElementById('sponsor-rank-3').innerHTML = '<div class="sponsor-card empty-card">読み込み失敗</div>';
             }
         }
 
