@@ -933,23 +933,29 @@
 
                     if (!name || name === '---') return;
 
+                 // スプレッドシートのURL欄をそのまま使いつつ、相対パス化を防ぐ処理
+                    let formattedUrl = url;
+                    if (formattedUrl && !/^(https?:\/\/|\/\/)/i.test(formattedUrl)) {
+        // http:// も https:// も付いていない場合、そのまま外部URLとして開けるよう補正
+                    formattedUrl = 'http://' + formattedUrl;
+    }
+
                     const cardHtml = `
-                        <div class="sponsor-card ${rank.includes('1') || rank.includes('ゴールド') ? 'rank-1-card' : ''}">
-                            <a href="${url || '#'}" ${url ? 'target="_blank" rel="noopener noreferrer"' : ''} class="sponsor-link">
-                                <div class="sponsor-name">${name}</div>${location ? `<div class="sponsor-location">${location}</div>` : ''}
-                            </a>
-                        </div>
+                     <div class="sponsor-card ${rank.includes('1') || rank.includes('ゴールド') ? 'rank-1-card' : ''}">
+                         <a href="${formattedUrl || '#'}" ${url ? 'target="_blank" rel="noopener noreferrer"' : ''} class="sponsor-link">
+                             <div class="sponsor-name">${name}</div>${location ? `<div class="sponsor-location">${location}</div>` : ''}
+                         </a>
+                     </div>
                     `;
 
-                    if (rank.includes('1') || rank.includes('ゴールド')) {
-                        rank1Html += cardHtml;
-                    } else if (rank.includes('2') || rank.includes('シルバー')) {
-                        rank2Html += cardHtml;
-                    } else {
-                        rank3Html += cardHtml;
-                    }
-                });
-
+    if (rank.includes('1') || rank.includes('ゴールド')) {
+        rank1Html += cardHtml;
+    } else if (rank.includes('2') || rank.includes('シルバー')) {
+        rank2Html += cardHtml;
+    } else {
+        rank3Html += cardHtml;
+    }
+});
                 document.getElementById('sponsor-rank-1').innerHTML = rank1Html || '<div class="sponsor-card empty-card">---</div>';
                 document.getElementById('sponsor-rank-2').innerHTML = rank2Html || '<div class="sponsor-card empty-card">---</div>';
                 document.getElementById('sponsor-rank-3').innerHTML = rank3Html || '<div class="sponsor-card empty-card">---</div>';
