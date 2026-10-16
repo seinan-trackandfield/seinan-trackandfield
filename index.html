@@ -784,7 +784,7 @@
         <section id="records">
             <div class="section-header-wrapper">
                 <h2 class="section-title">⏱ 大学記録 </h2>
-                <a href="https://drive.google.com/file/d/1J2BxYE1m5euafPM4w1NnPJBuCTkHz7b0/view?usp=drive_link" class="pdf-link" target="_blank">＞＞ 一覧表はこちら (PDF)</a>
+                <a href="#" id="records-pdf-link" class="pdf-link" target="_blank" style="display:none;">＞＞ 一覧表はこちら (PDF)</a>
             </div>
             
             <div class="records-scroll-container">
@@ -817,11 +817,14 @@
 
     <!-- JavaScript処理 -->
     <script>
+        // 大会結果用CSV URL (ここに発行されたCSVのURLを貼り付けてください)
         const resultsCsvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSFamKROQo2Htuxzfj2sfn3FCrw6ZMNCW4kuXFwl-qa8LsrmyeXFr6I2y7E-4C8Rx0XNfYLoeiBGdGa/pub?gid=0&single=true&output=csv';
+        // 大学記録CSV URL (ここに発行されたCSVのURLを貼り付けてください)
         const recordsCsvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSFamKROQo2Htuxzfj2sfn3FCrw6ZMNCW4kuXFwl-qa8LsrmyeXFr6I2y7E-4C8Rx0XNfYLoeiBGdGa/pub?gid=319677524&single=true&output=csv';
         // スポンサー用CSV URL (ここに発行されたCSVのURLを貼り付けてください)
         const sponsorsCsvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSFamKROQo2Htuxzfj2sfn3FCrw6ZMNCW4kuXFwl-qa8LsrmyeXFr6I2y7E-4C8Rx0XNfYLoeiBGdGa/pub?gid=481522128&single=true&output=csv';
-
+        // 大学記録PDF用のCSV URL
+        const recordsPdfCsvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSFamKROQo2Htuxzfj2sfn3FCrw6ZMNCW4kuXFwl-qa8LsrmyeXFr6I2y7E-4C8Rx0XNfYLoeiBGdGa/pub?gid=1114088927&single=true&output=csv';
         function parseCsvLine(line) {
             return line.split(',').map(col => col.replace(/^"|"$/g, '').trim());
         }
@@ -1030,6 +1033,44 @@
             }
         }
 
+        // （上には既存の loadSponsors や formatTrackRecord などのコードがあります）
+
+        // --- ④ 大学記録PDFのURL読み込み（←新規追加） ---
+        async function loadRecordsPdf() {
+            try {
+                if (!recordsPdfCsvUrl || recordsPdfCsvUrl.includes('★')) return;
+
+                const response = await fetch(recordsPdfCsvUrl);
+                const data = await response.text();
+                const lines = data.trim().split('\n').slice(1); // 見出し行スキップ
+
+                if (lines.length > 0) {
+                    const columns = parseCsvLine(lines[0]);
+                    const pdfUrl = columns[1] || columns[0] || ''; // B列（無ければA列）のURLを取得
+
+                    if (pdfUrl && pdfUrl !== '#') {
+                        const linkElem = document.getElementById('records-pdf-link');
+                        if (linkElem) {
+                            linkElem.href = pdfUrl;
+                            linkElem.style.display = 'inline'; // データがある時だけ表示
+                        }
+                    }
+                }
+            } catch (error) {
+                console.error('大学記録PDFリンク読み込みエラー:', error);
+            }
+        }
+
+        // 画面読み込み時の実行処理
+        window.addEventListener('DOMContentLoaded', () => {
+            loadResults();
+            loadRecords();
+            loadSponsors();
+            loadRecordsPdf(); // ← 付け足し
+        });
+    </script>
+</body>
+</html>
         window.addEventListener('DOMContentLoaded', () => {
             loadResults();
             loadRecords();
